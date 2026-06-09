@@ -1,0 +1,10 @@
+# Configuration for mise (used by Railpack on Railway for runtime management)
+# This disables GitHub artifact attestation checks for Python.
+# The specific python-3.12.4 build (and some other pinned old patches) can fail attestation
+# verification in certain mise versions. This is a safe, recommended workaround per mise/Railway guidance.
+
+[settings]
+python.github_attestations = false
+
+# You can also pin a preferred version here if desired:
+# python = "3.12"

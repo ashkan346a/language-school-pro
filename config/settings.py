@@ -13,9 +13,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =============================================================================
 # SECURITY & ENVIRONMENT
 # =============================================================================
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me-in-production-now')
-DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,testserver,.railway.app', cast=Csv())
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,testserver,.railway.app,language-school-pro-production.up.railway.app', cast=Csv())
+
+# SECRET_KEY handling with automatic generation for convenience.
+# In production (DEBUG=False) if not provided, we generate one and raise with the value
+# so you can copy-paste it directly into your Railway Variables dashboard.
+_raw_secret = config('SECRET_KEY', default=None)
+if _raw_secret:
+    SECRET_KEY = _raw_secret
+else:
+    if DEBUG:
+        # Safe dev fallback (never use in real production)
+        SECRET_KEY = 'django-insecure-dev-only-do-not-use-in-production-1234567890abcdefg'
+    else:
+        from django.core.management.utils import get_random_secret_key
+        generated = get_random_secret_key()
+        raise ValueError(
+            "SECRET_KEY is required in production.\n"
+            "Copy the following value into your Railway project Variables as SECRET_KEY "
+            "and redeploy:\n\n"
+            f"{generated}\n"
+        )
 
 # =============================================================================
 # APPLICATIONS
@@ -96,8 +115,26 @@ else:
 # =============================================================================
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'home'  # Will point to dashboard once implemented
 LOGOUT_REDIRECT_URL = 'home'
+
+# =============================================================================
+# PRODUCTION SECURITY (only enforce when DEBUG=False / HTTPS)
+# =============================================================================
+if not DEBUG:
+    # Trust Railway's proxy for HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # HSTS - start conservative (can increase after testing)
+    SECURE_HSTS_SECONDS = 3600  # 1 hour; increase to 31536000 (1 year) once stable
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    # Additional
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
