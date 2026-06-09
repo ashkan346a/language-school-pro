@@ -25,7 +25,7 @@ if _raw_secret:
 else:
     if DEBUG:
         # Safe dev fallback (never use in real production)
-        SECRET_KEY = 'django-insecure-dev-only-do-not-use-in-production-1234567890abcdefg'
+        SECRET_KEY = 'django-insecure-dev-aether-2026-persian-premium-space-xyz9876543210'
     else:
         from django.core.management.utils import get_random_secret_key
         generated = get_random_secret_key()
@@ -87,7 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # site injected explicitly in our public views for compatibility
+                'apps.core.context_processors.site_settings',  # global defensive site settings
             ],
         },
     },
@@ -152,12 +152,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # =============================================================================
-# I18N / TIME
+# I18N / TIME  — Full Persian experience (RTL + fa locale). Hardcoded Persian UI.
 # =============================================================================
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'fa'
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 USE_TZ = True
+
+# Add LocaleMiddleware for future if we extract .po, but current site is fully Persian hardcoded
+# MIDDLEWARE will get it below if needed. For now explicit Persian strings in templates.
 
 
 # =============================================================================

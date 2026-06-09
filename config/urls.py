@@ -34,15 +34,12 @@ urlpatterns = [
     # Course catalog + details + enroll (public + protected enroll)
     path('courses/', include('apps.catalog.urls')),
 
-    # Learning / Mission Control
-    path('missions/', include('apps.learning.urls')),
-
     # Themed auth (beautiful glassmorphic instead of admin)
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('accounts/', include('apps.accounts.urls')),
 
-    # Mission Control (dashboard + learn) — primary student area
+    # Mission Control / immersive learning (student area) — single include to avoid namespace collision
     path('missions/', include('apps.learning.urls')),
 
     # Convenience top-level dashboard alias

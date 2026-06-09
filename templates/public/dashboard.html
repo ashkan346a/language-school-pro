@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load aether_extras %}
 
-{% block title %}Mission Control — {{ site.site_name|default:"Aether" }}{% endblock %}
+{% block title %}مرکز فرماندهی — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-6 pt-10 pb-16">
   <div class="flex items-end justify-between mb-8">
     <div>
-      <div class="section-label">YOUR LOG</div>
-      <h1 class="text-6xl tracking-[-2.5px] font-semibold">Mission Control</h1>
+      <div class="section-label">لاگ شما</div>
+      <h1 class="text-6xl tracking-[-2.5px] font-semibold">مرکز فرماندهی</h1>
     </div>
-    <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)]">+ New trajectory</a>
+    <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)]">+ مسیر جدید</a>
   </div>
 
   {% if enrollments %}
@@ -22,7 +22,7 @@
             <div>
               <div class="text-xs tracking-widest text-white/50">{{ enr.course.language.name }} • {{ enr.course.get_level_display }}</div>
               <a href="{% url 'catalog:course_detail' enr.course.slug %}" class="block mt-1 text-2xl font-semibold tracking-tight hover:text-[var(--accent-cyan)]">{{ enr.course.title }}</a>
-              <div class="text-xs text-white/50 mt-0.5">{{ enr.get_status_display }} — Enrolled {{ enr.enrolled_at|date:"M Y" }}</div>
+              <div class="text-xs text-white/50 mt-0.5">{{ enr.get_status_display }} — ثبت‌نام {{ enr.enrolled_at|date:"M Y" }}</div>
             </div>
 
             <!-- Orbital progress ring -->
@@ -38,17 +38,17 @@
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center">
                   <div class="font-mono text-xl tabular-nums tracking-tighter">{{ pct }}</div>
-                  <div class="text-[9px] -mt-1 text-white/50">%</div>
+                  <div class="text-[9px] -mt-1 text-white/50">٪</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="mt-5 text-xs text-white/60">{{ done }} / {{ total }} waypoints reached</div>
+          <div class="mt-5 text-xs text-white/60">{{ done }} / {{ total }} ایستگاه رسیده شد</div>
 
           <div class="mt-auto pt-6 flex gap-2">
-            <a href="{% url 'learning:learn' enr.id %}" class="flex-1 orbit-btn text-center py-2.5 rounded-2xl bg-white text-black text-sm font-medium tracking-wider">CONTINUE MISSION</a>
-            <a href="{% url 'catalog:course_detail' enr.course.slug %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/15 hover:bg-white/5 tracking-widest">BRIEFING</a>
+            <a href="{% url 'learning:learn' enr.id %}" class="flex-1 orbit-btn text-center py-2.5 rounded-2xl bg-white text-black text-sm font-medium tracking-wider">ادامه ماموریت</a>
+            <a href="{% url 'catalog:course_detail' enr.course.slug %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/15 hover:bg-white/5 tracking-widest">بریفینگ</a>
           </div>
         </div>
         {% endwith %}
@@ -56,13 +56,13 @@
     </div>
   {% else %}
     <div class="glass rounded-3xl p-16 text-center">
-      <div class="text-2xl tracking-tight">No active trajectories yet.</div>
-      <p class="text-white/60 mt-2">Your personal constellation will light up here once you enroll in missions.</p>
-      <a href="{% url 'catalog:course_list' %}" class="mt-6 inline-block orbit-btn px-8 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black text-sm font-semibold tracking-wider">EXPLORE THE CONSTELLATION</a>
+      <div class="text-2xl tracking-tight">هنوز مسیر فعالی ندارید.</div>
+      <p class="text-white/60 mt-2">صورت فلکی شخصی شما اینجا روشن می‌شود وقتی در ماموریت‌ها ثبت‌نام کنید.</p>
+      <a href="{% url 'catalog:course_list' %}" class="mt-6 inline-block orbit-btn px-8 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black text-sm font-semibold tracking-wider">کاوش صورت فلکی</a>
     </div>
   {% endif %}
 
-  <div class="mt-6 text-[10px] text-white/40 px-1">Progress is recalculated live. Complete lessons in the immersive viewer to advance your orbit.</div>
+  <div class="mt-6 text-[10px] text-white/40 px-1">پیشرفت به صورت زنده محاسبه می‌شود. درس‌ها را در نمایشگر غوطه‌ور تکمیل کنید تا مدار خود را پیش ببرید.</div>
 </div>
 
 <script>

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Manifest — {{ site.site_name|default:"Aether" }}{% endblock %}
+{% block title %}مانیفست — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-6 pt-12 pb-16">
   <div class="max-w-2xl">
-    <div class="section-label">THE MISSION MANIFEST</div>
-    <h1 class="text-6xl tracking-[-2.6px] font-semibold mt-2">Choose your trajectory.</h1>
-    <p class="mt-4 text-xl text-white/70">Transparent vectors. No fine print. Every course is a complete, self-contained mission. All prices and tiers are fully live-editable from the admin.</p>
+    <div class="section-label">مانیفست ماموریت</div>
+    <h1 class="text-6xl tracking-[-2.6px] font-semibold mt-2">مسیر خود را انتخاب کنید.</h1>
+    <p class="mt-4 text-xl text-white/70">بردارهای شفاف. بدون تبصره پنهان. هر دوره یک ماموریت کامل خودکفا است. همه قیمت‌ها و سطوح کاملاً از ادمین زنده قابل ویرایش هستند.</p>
   </div>
 
   <!-- Pricing Tiers -->
@@ -23,9 +23,9 @@
         <div class="my-8">
           {% if tier.price > 0 %}
             <span class="text-6xl font-semibold tabular-nums tracking-[-1.5px]">{{ tier.price|floatformat:0 }}</span>
-            <span class="text-white/60 ml-1">{{ tier.currency }}</span>
+            <span class="text-white/60 mr-1">{{ tier.currency }}</span>
           {% else %}
-            <span class="text-4xl font-semibold tracking-tight">Contact</span>
+            <span class="text-4xl font-semibold tracking-tight">تماس</span>
           {% endif %}
           <div class="text-xs text-white/50 mt-0.5">{{ tier.period }}</div>
         </div>
@@ -59,10 +59,10 @@
     {% endfor %}
   </div>
 
-  <div class="mt-12 text-center text-xs text-white/40 tracking-[2px]">All trajectories include lifetime access to the curriculum + certificate upon mission completion. Live cohorts include recordings.</div>
+  <div class="mt-12 text-center text-xs text-white/40 tracking-[2px]">تمام مسیرها شامل دسترسی مادام‌العمر به برنامه درسی + گواهی پس از تکمیل ماموریت هستند. گروه‌های زنده شامل ضبط جلسات می‌شوند.</div>
 
   <div class="mt-6 text-center">
-    <a href="{% url 'catalog:course_list' %}" class="text-[var(--accent-cyan)] text-sm">Browse the complete mission catalog →</a>
+    <a href="{% url 'catalog:course_list' %}" class="text-[var(--accent-cyan)] text-sm">مرور کاتالوگ کامل ماموریت‌ها ←</a>
   </div>
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static aether_extras %}
 
-{% block title %}{{ course.title }} — {{ site.site_name|default:"Aether" }}{% endblock %}
+{% block title %}{{ course.title }} — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -19,7 +19,7 @@
 <div class="max-w-6xl mx-auto px-6 pt-9 pb-20">
   <!-- Top meta -->
   <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/50 tracking-[1px]">
-    <a href="{% url 'catalog:course_list' %}" class="hover:text-[var(--accent-cyan)]">← ALL MISSIONS</a>
+    <a href="{% url 'catalog:course_list' %}" class="hover:text-[var(--accent-cyan)]">← همه ماموریت‌ها</a>
     <span class="hidden md:inline">/</span>
     <span style="color:{{ course.language.accent_color }}">{{ course.language.name }}</span>
     <span>{{ course.get_level_display }}</span>
@@ -34,50 +34,50 @@
 
     <div class="lg:text-right pt-1 lg:pt-3">
       <div class="text-5xl font-semibold tabular-nums tracking-[-1.5px]">{{ course.display_price }}</div>
-      <div class="text-xs text-white/50">{{ course.duration_weeks }} WEEK TRAJECTORY • {{ course.max_enrollments|default:"UNLIMITED" }} SEATS</div>
+      <div class="text-xs text-white/50">{{ course.duration_weeks }} هفته مسیر • {{ course.max_enrollments|default:"نامحدود" }} صندلی</div>
 
       <div class="mt-4 flex lg:justify-end gap-2">
         {% if enrollment %}
-          <a href="{% url 'learning:learn' enrollment.id %}" class="orbit-btn px-6 py-2.5 rounded-2xl bg-emerald-500/90 text-black text-sm font-medium tracking-wider">CONTINUE MISSION →</a>
+          <a href="{% url 'learning:learn' enrollment.id %}" class="orbit-btn px-6 py-2.5 rounded-2xl bg-emerald-500/90 text-black text-sm font-medium tracking-wider">ادامه ماموریت ←</a>
         {% else %}
-          <a href="{% url 'catalog:enroll' course.slug %}" onclick="return confirm('Lock in this trajectory? You will be enrolled immediately.');" 
-             class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">ENROLL IN THIS VECTOR</a>
-          <a href="{% url 'accounts:register' %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/20 hover:bg-white/5 tracking-widest">CREATE LOG FIRST</a>
+          <a href="{% url 'catalog:enroll' course.slug %}" onclick="return confirm('این مسیر را قفل می‌کنید؟ بلافاصله ثبت‌نام می‌شوید.');" 
+             class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">ثبت‌نام در این بردار</a>
+          <a href="{% url 'accounts:register' %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/20 hover:bg-white/5 tracking-widest">ابتدا لاگ بسازید</a>
         {% endif %}
       </div>
-      <div class="text-[10px] text-white/40 mt-1.5 lg:text-right">Admin-editable • Instant activation</div>
+      <div class="text-[10px] text-white/40 mt-1.5 lg:text-right">قابل ویرایش در ادمین • فعال‌سازی فوری</div>
     </div>
   </div>
 
   <!-- Mission brief + what you will learn -->
   <div class="mt-10 grid lg:grid-cols-5 gap-4">
     <div class="lg:col-span-3 glass rounded-3xl p-8">
-      <div class="uppercase text-xs tracking-[3px] text-white/50 mb-3">MISSION BRIEFING</div>
+      <div class="uppercase text-xs tracking-[3px] text-white/50 mb-3">بریفینگ ماموریت</div>
       <div class="prose prose-invert max-w-none text-[15px] text-white/85 leading-relaxed">
         {{ course.description|linebreaks }}
       </div>
       {% if course.requirements %}
         <div class="mt-6 pt-6 border-t border-white/10 text-sm">
-          <span class="text-xs tracking-widest text-white/50">PREREQUISITES</span><br>
+          <span class="text-xs tracking-widest text-white/50">پیش‌نیازها</span><br>
           {{ course.requirements }}
         </div>
       {% endif %}
     </div>
 
     <div class="lg:col-span-2 glass rounded-3xl p-8">
-      <div class="text-xs tracking-[3px] text-white/50 mb-3">WHAT YOU WILL ACHIEVE</div>
+      <div class="text-xs tracking-[3px] text-white/50 mb-3">آنچه به دست خواهید آورد</div>
       <ul class="space-y-[13px] text-[14.5px]">
         {% for item in course.what_you_will_learn %}
           <li class="flex gap-3"><span class="mt-1.5 text-[var(--accent-cyan)] text-[9px]">●</span> <span>{{ item }}</span></li>
         {% empty %}
-          <li class="text-white/50 text-sm">Objectives are configured in the admin under the course.</li>
+          <li class="text-white/50 text-sm">اهداف در ادمین زیر دوره قابل تنظیم هستند.</li>
         {% endfor %}
       </ul>
 
       {% if enrollment %}
       <div class="mt-7 pt-5 border-t border-white/10 text-xs">
-        <span class="px-2.5 py-1 bg-emerald-400/10 text-emerald-400 rounded">YOU ARE IN ORBIT</span>
-        <span class="ml-2 text-white/50">{{ enrollment.progress_percent }}% COMPLETE</span>
+        <span class="px-2.5 py-1 bg-emerald-400/10 text-emerald-400 rounded">شما در مدار هستید</span>
+        <span class="mr-2 text-white/50">{{ enrollment.progress_percent }}٪ تکمیل</span>
       </div>
       {% endif %}
     </div>
@@ -87,13 +87,13 @@
   <div class="mt-8">
     <div class="flex items-center justify-between mb-4 px-1">
       <div>
-        <div class="section-label">FLIGHT PLAN</div>
-        <div class="text-3xl tracking-tight font-semibold">Curriculum • {{ total_lessons }} transmissions</div>
+        <div class="section-label">برنامه پرواز</div>
+        <div class="text-3xl tracking-tight font-semibold">برنامه درسی • {{ total_lessons }} انتقال</div>
       </div>
       {% if enrollment %}
         <div class="text-right">
-          <div class="font-mono text-3xl tabular-nums tracking-tighter">{{ progress_percent }}<span class="text-base align-super text-white/50">%</span></div>
-          <div class="text-xs -mt-1 text-white/50">COMPLETE</div>
+          <div class="font-mono text-3xl tabular-nums tracking-tighter">{{ progress_percent }}<span class="text-base align-super text-white/50">٪</span></div>
+          <div class="text-xs -mt-1 text-white/50">تکمیل</div>
         </div>
       {% endif %}
     </div>
@@ -102,7 +102,7 @@
       {% for module in course.modules.all %}
         <div class="p-7 waypoint">
           <div class="flex items-center gap-4">
-            <div class="text-xs px-3 py-px rounded bg-white/5 text-white/60 tracking-widest">MODULE {{ module.order }}</div>
+            <div class="text-xs px-3 py-px rounded bg-white/5 text-white/60 tracking-widest">ماژول {{ module.order }}</div>
             <div class="font-semibold text-xl tracking-tight">{{ module.title }}</div>
             {% if module.description %}<div class="text-sm text-white/50 ml-2">{{ module.description }}</div>{% endif %}
           </div>
@@ -124,13 +124,13 @@
                   {% if enrollment %}
                     {% with lp=progress_map|get_item:lesson.id %}
                     {% if lp and lp.is_completed %}
-                      <span class="text-emerald-400 text-xs tracking-widest">WAYPOINT REACHED</span>
+                      <span class="text-emerald-400 text-xs tracking-widest">ایستگاه رسیده شد</span>
                     {% else %}
-                      <a href="{% url 'learning:learn_lesson' enrollment.id lesson.id %}" class="text-xs px-3 py-1 rounded border border-white/10 hover:bg-white/5 group-hover:border-[var(--accent-cyan)]/40">TRANSMIT</a>
+                      <a href="{% url 'learning:learn_lesson' enrollment.id lesson.id %}" class="text-xs px-3 py-1 rounded border border-white/10 hover:bg-white/5 group-hover:border-[var(--accent-cyan)]/40">ارسال</a>
                     {% endif %}
                     {% endwith %}
                   {% else %}
-                    <span class="text-white/30 text-xs">ENROLL TO UNLOCK</span>
+                    <span class="text-white/30 text-xs">برای باز کردن ثبت‌نام کنید</span>
                   {% endif %}
                 </div>
               </div>

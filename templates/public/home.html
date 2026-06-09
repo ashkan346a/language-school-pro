@@ -10,9 +10,18 @@
   .constellation-card { transition: transform .3s cubic-bezier(0.23,1,0.32,1), box-shadow .3s, border-color .2s; }
   .constellation-card:hover { transform: translateY(-6px); box-shadow: 0 30px 70px -20px rgba(0,0,0,.65); border-color: rgba(0,229,255,.3); }
   .mini-planet { width:22px; height:22px; border-radius:999px; display:inline-block; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
-  .section-label { letter-spacing:4.5px; font-size:10px; font-weight:600; opacity:.5; }
+  .section-label { letter-spacing:3px; font-size:10px; font-weight:600; opacity:.5; }
   .holo-card { position:relative; }
   .holo-card::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg, rgba(0,229,255,.06), rgba(124,58,237,.04), rgba(255,77,148,.03)); z-index:-1; }
+  /* Extra miniature space premium layers for Starlink-like depth */
+  .nebula-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .18;
+    pointer-events: none;
+    z-index: 0;
+  }
 
   /* Professional left-side nebula / miniature star dust (matches premium aesthetic in reference) */
   .hero-particles {
@@ -55,31 +64,31 @@
     <canvas id="hero-starfield" class="starfield" style="opacity:0.55;"></canvas>
 
     <div class="relative z-10 max-w-[860px] px-6 text-center">
-      <!-- Exact premium badge from reference -->
-      <div class="badge-space inline-flex items-center text-white/70 mb-7">EST 2026 • EXTRATERRESTRIAL PROGRAM</div>
+      <!-- Exact premium badge -->
+      <div class="badge-space inline-flex items-center text-white/70 mb-7">تأسیس ۱۴۰۵ • برنامه فرازمینی</div>
 
-      <h1 class="text-[68px] md:text-[86px] font-semibold tracking-[-3.8px] leading-[.92] mb-5 text-white">
-        {{ site.hero_title|default:"Languages that take you to new worlds." }}
+      <h1 class="text-[60px] md:text-[82px] font-semibold tracking-[-3.2px] leading-[.92] mb-5 text-white">
+        {{ site.hero_title|default:"زبان‌هایی که شما را به جهان‌های جدید می‌برند." }}
       </h1>
 
       <p class="max-w-[620px] mx-auto text-[17px] md:text-[18px] text-white/75 tracking-[-0.1px] leading-relaxed">
-        {{ site.hero_subtitle|default:"An extraordinary platform for explorers. Configure everything from the admin after the first deploy." }}
+        {{ site.hero_subtitle|default:"پلتفرمی فراتر از تصور برای کاوشگران. همه چیز از پنل مدیریت کاملاً قابل تنظیم است." }}
       </p>
 
       <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
         <a href="#constellation" 
            class="orbit-btn group inline-flex items-center justify-center gap-2.5 px-8 py-[13px] rounded-2xl bg-[#00e5ff] text-black font-semibold text-[15px] tracking-[-0.1px] active:scale-[0.985] transition">
-          {{ site.hero_primary_cta|default:"Begin Your Journey" }}
-          <span class="group-hover:translate-x-0.5 transition text-lg leading-none">→</span>
+          {{ site.hero_primary_cta|default:"شروع سفر" }}
+          <span class="group-hover:-translate-x-0.5 transition text-lg leading-none">←</span>
         </a>
 
         <a href="{% url 'catalog:course_list' %}" 
            class="orbit-btn inline-flex items-center justify-center px-7 py-[13px] rounded-2xl border border-white/25 hover:bg-white/5 text-[15px] tracking-tight transition">
-          Browse All Missions
+          مشاهده همه ماموریت‌ها
         </a>
       </div>
 
-      <div class="mt-12 scroll-indicator text-[10px] tracking-[4.5px] text-white/30">SCROLL TO PLOT YOUR TRAJECTORY</div>
+      <div class="mt-12 scroll-indicator text-[10px] tracking-[4px] text-white/30">برای ترسیم مسیر خود اسکرول کنید</div>
     </div>
   </header>
 
@@ -87,12 +96,12 @@
   <div class="max-w-6xl mx-auto px-6 -mt-10 relative z-20">
     <div class="glass rounded-3xl p-8 md:p-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 border border-white/5">
       {% for stat in stats %}
-        <div class="text-center border-l border-white/10 first:border-l-0 pl-6 first:pl-0">
+        <div class="text-center border-r border-white/10 last:border-r-0 pr-6 last:pr-0">
           <div class="font-mono text-4xl font-semibold tracking-tighter text-white">{{ stat.value }}</div>
           <div class="text-xs mt-1.5 text-white/50 tracking-widest">{{ stat.label | upper }}</div>
         </div>
       {% empty %}
-        <div class="col-span-full text-center text-white/40 py-2">Configure live stats in Admin → Core → Stats</div>
+        <div class="col-span-full text-center text-white/40 py-2">آمار زنده را در ادمین → Core → Stats تنظیم کنید</div>
       {% endfor %}
     </div>
   </div>
@@ -101,10 +110,10 @@
   <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-14">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-9">
       <div>
-        <div class="section-label">SECTOR NAVIGATION</div>
-        <h2 class="text-6xl tracking-[-2.4px] font-semibold">The Constellation</h2>
+        <div class="section-label">ناوبری بخش‌ها</div>
+        <h2 class="text-6xl tracking-[-2.4px] font-semibold">صورت فلکی</h2>
       </div>
-      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">View full mission catalog →</a>
+      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">مشاهده کاتالوگ کامل ماموریت‌ها ←</a>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
@@ -114,11 +123,11 @@
           <span class="mini-planet" style="background:{{ lang.accent_color }}; box-shadow:0 0 18px {{ lang.accent_color }}55;"></span>
           <span class="font-medium text-xl tracking-tight">{{ lang.name }}</span>
         </div>
-        <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1">{{ lang.short_desc|default:"Precision language vectors for explorers who refuse the ordinary." }}</div>
-        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">PLOT VECTOR →</div>
+        <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1">{{ lang.short_desc|default:"بردارهای دقیق زبانی برای کاوشگرانی که معمولی بودن را نمی‌پذیرند." }}</div>
+        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">ترسیم بردار ←</div>
       </a>
       {% empty %}
-      <div class="col-span-full p-8 glass rounded-3xl text-center text-white/50">No active languages configured. Add Languages in the admin (Core section).</div>
+      <div class="col-span-full p-8 glass rounded-3xl text-center text-white/50">هیچ زبانی فعال نیست. زبان‌ها را در ادمین (بخش Core) اضافه کنید.</div>
       {% endfor %}
     </div>
   </section>
@@ -126,8 +135,8 @@
   <!-- WHY AETHER / FEATURES -->
   <section class="bg-[#0a0c1a] py-16 border-y border-white/10">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="section-label mb-2">THE AETHER METHOD</div>
-      <h3 class="text-5xl tracking-[-1.6px] font-semibold leading-none mb-10">Designed for those who<br>refuse ordinary orbits.</h3>
+      <div class="section-label mb-2">روش اتر</div>
+      <h3 class="text-5xl tracking-[-1.6px] font-semibold leading-none mb-10">طراحی شده برای کسانی که<br>مدارهای معمولی را نمی‌پذیرند.</h3>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
         {% for f in features %}
@@ -137,7 +146,7 @@
           <p class="text-[14px] text-white/70 leading-relaxed">{{ f.description }}</p>
         </div>
         {% empty %}
-          <div class="col-span-full text-white/50">Add Features through the admin. Each uses a unique miniature icon.</div>
+          <div class="col-span-full text-white/50">ویژگی‌ها را از طریق ادمین اضافه کنید. هر کدام آیکون مینیاتوری منحصر به فرد دارد.</div>
         {% endfor %}
       </div>
     </div>
@@ -147,8 +156,8 @@
   <section class="max-w-6xl mx-auto px-6 py-20">
     <div class="flex items-end justify-between mb-8">
       <div>
-        <div class="section-label">TRANSMISSIONS FROM THE CREW</div>
-        <h3 class="text-5xl tracking-[-1.8px] font-semibold">Real explorers. Real vectors.</h3>
+        <div class="section-label">پیام‌های خدمه</div>
+        <h3 class="text-5xl tracking-[-1.8px] font-semibold">کاوشگران واقعی. بردارهای واقعی.</h3>
       </div>
     </div>
 
@@ -156,22 +165,22 @@
       {% for t in testimonials %}
       <div class="glass rounded-3xl p-8">
         <div class="flex gap-px text-[var(--accent-cyan)] mb-5 text-lg">{{ t.stars }}</div>
-        <blockquote class="text-[17px] leading-tight tracking-[-0.1px]">“{{ t.quote }}”</blockquote>
+        <blockquote class="text-[17px] leading-tight tracking-[-0.1px]">«{{ t.quote }}»</blockquote>
         <div class="mt-8 text-sm">
           <div class="font-medium">{{ t.name }}</div>
           <div class="text-white/50">{{ t.role }}</div>
         </div>
       </div>
       {% empty %}
-      <div class="col-span-full text-white/40">Seed Testimonials in Admin → Core → Testimonials to populate this log.</div>
+      <div class="col-span-full text-white/40">تستیمونیال‌ها را در ادمین → Core → Testimonials بذارید تا اینجا نمایش داده شوند.</div>
       {% endfor %}
     </div>
   </section>
 
-  <!-- FAQ (simple elegant list, Alpine removed for broad py compat) -->
+  <!-- FAQ -->
   <section class="max-w-4xl mx-auto px-6 pb-20">
-    <div class="section-label mb-3">FREQUENTLY ASKED TRAJECTORY QUESTIONS</div>
-    <h3 class="text-4xl tracking-tight font-semibold mb-8">Everything you need to know before launch.</h3>
+    <div class="section-label mb-3">سوالات متداول مسیرهای ماموریت</div>
+    <h3 class="text-4xl tracking-tight font-semibold mb-8">هر آنچه پیش از پرتاب باید بدانید.</h3>
 
     <div class="divide-y divide-white/10 border-y border-white/10">
       {% for faq in faqs %}
@@ -180,7 +189,7 @@
         <div class="pt-2 text-white/70 text-[15px] pr-8">{{ faq.answer }}</div>
       </div>
       {% empty %}
-        <div class="py-6 text-white/50">Add FAQs in the admin for this elegant list to appear.</div>
+        <div class="py-6 text-white/50">سوالات متداول را در ادمین اضافه کنید تا این لیست زیبا نمایش داده شود.</div>
       {% endfor %}
     </div>
   </section>
@@ -188,15 +197,15 @@
   <!-- FINAL HORIZON CTA -->
   <section id="launch" class="max-w-4xl mx-auto px-6 pb-24">
     <div class="glass rounded-3xl px-10 py-14 text-center border border-white/10">
-      <div class="text-[var(--accent-cyan)] tracking-[3.5px] text-xs mb-2">THE HORIZON AWAITS</div>
-      <h3 class="text-6xl tracking-[-2px] font-semibold">Ready to chart a new course?</h3>
-      <p class="mt-3 max-w-md mx-auto text-white/70">Join the next cohort of language explorers. Every element on this platform is live-editable from Mission Control.</p>
+      <div class="text-[var(--accent-cyan)] tracking-[3.5px] text-xs mb-2">افق در انتظار است</div>
+      <h3 class="text-6xl tracking-[-2px] font-semibold">آماده‌اید مسیر جدیدی ترسیم کنید؟</h3>
+      <p class="mt-3 max-w-md mx-auto text-white/70">به گروه بعدی کاوشگران زبان بپیوندید. هر المان این پلتفرم از مرکز فرماندهی زنده قابل ویرایش است.</p>
 
       <div class="mt-8 flex justify-center gap-3">
-        <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">EXPLORE MISSIONS</a>
-        <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">CREATE YOUR LOG</a>
+        <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">کاوش ماموریت‌ها</a>
+        <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">ایجاد لاگ شخصی</a>
       </div>
-      <div class="mt-4 text-[10px] text-white/40 tracking-widest">FULLY CONFIGURABLE • NO CODE REQUIRED</div>
+      <div class="mt-4 text-[10px] text-white/40 tracking-widest">کاملاً قابل تنظیم • بدون نیاز به کد</div>
     </div>
   </section>
 

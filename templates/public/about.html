@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}The Academy — {{ site.site_name|default:"Aether" }}{% endblock %}
+{% block title %}آکادمی — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -13,27 +13,27 @@
 <div class="max-w-5xl mx-auto px-6 pt-12 pb-20">
   <!-- Hero intro -->
   <div class="max-w-3xl">
-    <div class="section-label">OUR TRAJECTORY</div>
-    <h1 class="text-7xl tracking-[-3.2px] font-semibold leading-none mt-2">The Academy</h1>
-    <p class="mt-6 text-2xl text-white/70 tracking-tight">Aether exists for explorers who find ordinary language platforms uninspiring. We built a miniature cosmos where every detail — the glass mission cards, the living constellation progress, the precise micro-animations — makes fluency feel like the extraordinary journey it truly is.</p>
+    <div class="section-label">مسیر ما</div>
+    <h1 class="text-7xl tracking-[-3.2px] font-semibold leading-none mt-2">آکادمی</h1>
+    <p class="mt-6 text-2xl text-white/70 tracking-tight">اتر برای کاوشگرانی وجود دارد که پلتفرم‌های معمولی زبان را الهام‌بخش نمی‌یابند. ما یک کیهان مینیاتوری ساختیم که در آن هر جزئیات — کارت‌های شیشه‌ای ماموریت، پیشرفت صورت فلکی زنده، میکرو-انیمیشن‌های دقیق — تسلط را مانند سفری فرازمینی واقعی جلوه می‌دهد.</p>
   </div>
 
   <div class="mt-12 grid md:grid-cols-5 gap-4 text-sm">
     <div class="md:col-span-3 glass rounded-3xl p-8">
-      <div class="uppercase tracking-[3px] text-xs text-white/50 mb-3">THE PHILOSOPHY</div>
-      <div class="text-[17px] leading-tight">Language is not a subject. It is a new coordinate system. We teach you to navigate culture, rhythm, humor and precision the way pilots learn to read the stars — through repeated, beautiful, high-signal practice that rewires how you think.</div>
+      <div class="uppercase tracking-[3px] text-xs text-white/50 mb-3">فلسفه</div>
+      <div class="text-[17px] leading-tight">زبان یک موضوع نیست. یک سیستم مختصات جدید است. ما به شما آموزش می‌دهیم تا فرهنگ، ریتم، طنز و دقت را مانند خلبانانی که ستاره‌ها را می‌خوانند ناوبری کنید — از طریق تمرین مکرر، زیبا و با سیگنال بالا که طرز فکر شما را بازنویسی می‌کند.</div>
     </div>
     <div class="md:col-span-2 glass rounded-3xl p-8 flex flex-col">
-      <div class="text-xs tracking-[3px] text-white/50 mb-2">OUR PROMISE</div>
-      <div class="flex-1 text-lg">Every pixel, every waypoint, every transmission is intentional. Nothing generic. Nothing ordinary.</div>
-      <div class="text-[var(--accent-cyan)] text-xs tracking-widest mt-6">— LEAD ARCHITECTS</div>
+      <div class="text-xs tracking-[3px] text-white/50 mb-2">وعده ما</div>
+      <div class="flex-1 text-lg">هر پیکسل، هر ایستگاه، هر انتقال عمدی است. هیچ چیز عمومی. هیچ چیز معمولی.</div>
+      <div class="text-[var(--accent-cyan)] text-xs tracking-widest mt-6">— معماران ارشد</div>
     </div>
   </div>
 
   <!-- The Method -->
   <div class="mt-20">
-    <div class="section-label mb-2">THE AETHER METHOD</div>
-    <h2 class="text-4xl tracking-tight font-semibold mb-8">Four vectors. One orbit.</h2>
+    <div class="section-label mb-2">روش اتر</div>
+    <h2 class="text-4xl tracking-tight font-semibold mb-8">چهار بردار. یک مدار.</h2>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
       {% for f in features %}
@@ -50,8 +50,8 @@
 
   <!-- The Crew / Architects -->
   <div class="mt-20">
-    <div class="section-label">THE ARCHITECTS</div>
-    <h2 class="text-4xl tracking-[-1px] font-semibold mt-1 mb-8">Meet the crew who chart the trajectories.</h2>
+    <div class="section-label">معماران</div>
+    <h2 class="text-4xl tracking-[-1px] font-semibold mt-1 mb-8">با خدمه‌ای که مسیرها را ترسیم می‌کنند آشنا شوید.</h2>
 
     <div class="grid md:grid-cols-3 gap-3">
       {% for member in crew %}
@@ -64,22 +64,22 @@
           </div>
         </div>
         {% if member.quote %}
-        <div class="mt-6 italic text-white/80 text-[15px]">“{{ member.quote }}”</div>
+        <div class="mt-6 italic text-white/80 text-[15px]">«{{ member.quote }}»</div>
         {% endif %}
         {% if member.bio %}
         <div class="mt-4 text-sm text-white/70">{{ member.bio }}</div>
         {% endif %}
       </div>
       {% empty %}
-        <div class="col-span-3 text-white/50 glass p-8 rounded-3xl">Add Crew Members in Admin → Core → Crew. They will appear with their unique accent rings and quotes.</div>
+        <div class="col-span-3 text-white/50 glass p-8 rounded-3xl">اعضای خدمه را در ادمین → Core → Crew اضافه کنید. آن‌ها با حلقه‌های تاکیدی منحصر به فرد و نقل قول‌هایشان ظاهر خواهند شد.</div>
       {% endfor %}
     </div>
-    <div class="text-[10px] text-white/40 mt-3 tracking-widest">All instructors are also editable as Teacher Profiles with full curriculum attribution.</div>
+    <div class="text-[10px] text-white/40 mt-3 tracking-widest">تمام مربیان همچنین به عنوان پروفایل‌های معلم با انتساب کامل برنامه درسی قابل ویرایش هستند.</div>
   </div>
 
   <!-- Languages we fly -->
   <div class="mt-20">
-    <div class="section-label">LANGUAGES IN THE CONSTELLATION</div>
+    <div class="section-label">زبان‌های صورت فلکی</div>
     <div class="mt-3 flex flex-wrap gap-2">
       {% for lang in languages %}
         <a href="{% url 'catalog:course_list' %}?lang={{ lang.slug }}" class="px-5 py-1.5 text-sm rounded-full border border-white/10 hover:border-white/30 transition flex items-center gap-2">
@@ -87,13 +87,13 @@
           {{ lang.name }}
         </a>
       {% empty %}
-        <span class="text-white/40">Languages will be listed here once added in admin.</span>
+        <span class="text-white/40">زبان‌ها اینجا لیست خواهند شد وقتی در ادمین اضافه شوند.</span>
       {% endfor %}
     </div>
   </div>
 
   <div class="mt-16">
-    <a href="/" class="text-[var(--accent-cyan)] text-sm tracking-widest hover:underline">← RETURN TO BASE</a>
+    <a href="/" class="text-[var(--accent-cyan)] text-sm tracking-widest hover:underline">← بازگشت به پایگاه</a>
   </div>
 </div>
 {% endblock %}

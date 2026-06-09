@@ -25,23 +25,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Seeding Aether demo data...")
 
-        # Site settings (singleton)
+        # Site settings (singleton) — Full Persian premium
         site = SiteSettings.load()
-        site.site_name = "Aether"
-        site.tagline = "Chart your course to fluency."
-        site.hero_title = "Languages that take you to new worlds."
-        site.hero_subtitle = "An extraordinary platform for explorers. Every mission is meticulously designed with a miniature extraterrestrial aesthetic. Fully configurable from this admin."
+        site.site_name = "اتر"
+        site.tagline = "مسیر خود را به سوی تسلط ترسیم کنید."
+        site.hero_title = "زبان‌هایی که شما را به جهان‌های جدید می‌برند."
+        site.hero_subtitle = "پلتفرمی فراتر از تصور برای کاوشگران. هر ماموریت با زیبایی‌شناسی مینیاتوری فرازمینی دقیق طراحی شده. کاملاً از این ادمین قابل تنظیم."
+        site.hero_primary_cta = "شروع سفر"
         site.save()
 
-        # Languages (European focus + English)
+        # Languages — Persian descriptions for a true Persian-first premium school
         languages_data = [
-            ("English", "en", "#00e5ff", "The universal command language of exploration."),
-            ("Spanish", "es", "#ff4d94", "Warm trajectories through Latin culture."),
-            ("French", "fr", "#7c3aed", "Precision and elegance in every phoneme."),
-            ("German", "de", "#22c55e", "Engineering-grade structure and depth."),
-            ("Italian", "it", "#f59e0b", "Melodic and passionate expression."),
-            ("Portuguese", "pt", "#3b82f6", "Expansive, soulful voyages."),
-            ("Russian", "ru", "#a78bfa", "Rich literary cosmos and resilience."),
+            ("انگلیسی", "en", "#00e5ff", "زبان فرماندهی جهانی اکتشاف. از مذاکرات بین‌المللی تا داستان‌سرایی مدرن."),
+            ("اسپانیایی", "es", "#ff4d94", "مسیرهای گرم از میان فرهنگ لاتین. ریتم، شور و زندگی."),
+            ("فرانسوی", "fr", "#7c3aed", "دقت و ظرافت در هر واج. زبان دیپلماسی و هنر."),
+            ("آلمانی", "de", "#22c55e", "ساختار و عمق در سطح مهندسی. دقت و قدرت بیان."),
+            ("ایتالیایی", "it", "#f59e0b", "بیان ملودیک و پرشور. زبان زیبایی و طراحی."),
+            ("پرتغالی", "pt", "#3b82f6", "سفرهای وسیع و روح‌انگیز. از برزیل تا اروپا."),
+            ("روسی", "ru", "#a78bfa", "کیهان ادبی غنی و استقامت. عمق واقعی در کلمات."),
         ]
         langs = {}
         for name, code, color, desc in languages_data:
@@ -51,32 +52,32 @@ class Command(BaseCommand):
             )
             langs[name] = lang
 
-        # Stats
+        # Stats (Persian premium)
         stats = [
-            ("2.4k", "Explorers currently in orbit"),
-            ("47", "Languages launched to date"),
-            ("94%", "Mission success rate"),
-            ("312", "Certificates minted this quarter"),
-            ("18", "Average light-years progressed"),
+            ("۲.۴k", "کاوشگر در حال حاضر در مدار"),
+            ("۴۷", "زبان پرتاب شده تا امروز"),
+            ("۹۴٪", "نرخ موفقیت ماموریت"),
+            ("۳۱۲", "گواهی صادر شده این فصل"),
+            ("۱۸", "میانگین سال نوری پیشرفت"),
         ]
         for i, (val, label) in enumerate(stats):
             Stat.objects.get_or_create(value=val, label=label, defaults={"order": i, "icon_key": "rocket"})
 
-        # Features (miniature unique)
+        # Features (miniature unique, Persian)
         features = [
-            ("constellation", "Constellation Curriculum", "Every module forms part of a living map. Complete waypoints and watch your personal constellation light up."),
-            ("rocket", "Accelerated Vector", "Our proprietary method compresses years of progress into focused, beautiful missions."),
-            ("planet", "Living Language Orbs", "Practice with AI companions and real humans in miniature simulated environments that feel alive."),
-            ("satellite", "Global Relay Network", "Seamless live cohorts across time zones with recordings that feel present."),
+            ("constellation", "برنامه درسی صورت فلکی", "هر ماژول بخشی از یک نقشه زنده است. ایستگاه‌ها را کامل کنید و ببینید صورت فلکی شخصی‌تان روشن می‌شود."),
+            ("rocket", "بردار شتاب‌یافته", "روش اختصاصی ما سال‌ها پیشرفت را در ماموریت‌های متمرکز و زیبا فشرده می‌کند."),
+            ("planet", "ارب‌های زنده زبان", "با همراهان هوش مصنوعی و انسان‌های واقعی در محیط‌های شبیه‌سازی شده مینیاتوری که زنده به نظر می‌رسند تمرین کنید."),
+            ("satellite", "شبکه رله جهانی", "گروه‌های زنده بی‌وقفه در مناطق زمانی مختلف با ضبط‌هایی که حضور را القا می‌کنند."),
         ]
         for i, (icon, title, desc) in enumerate(features):
             Feature.objects.get_or_create(title=title, defaults={"icon_key": icon, "description": desc, "order": i})
 
-        # Testimonials (crew logs)
+        # Testimonials (crew logs, Persian)
         testimonials = [
-            ("Captain Elena Voss", "Spanish • 680 light-years", "Aether didn’t just teach me Spanish — it rewired how I think. The design and pacing are otherworldly.", 5, "Spanish"),
-            ("Dr. Malik Raines", "French • Mission Control", "The most premium educational experience I have ever encountered. Every pixel feels intentional.", 5, "French"),
-            ("Sofia Kovalenko", "Russian • Deep Space", "I finally understand the soul of the language. The constellation progress view is addictive.", 5, "Russian"),
+            ("کاپیتان الن ووس", "اسپانیایی • ۶۸۰ سال نوری", "اتر فقط به من اسپانیایی یاد نداد — طرز فکرم را بازنویسی کرد. طراحی و ریتم آن فرازمینی است.", 5, "اسپانیایی"),
+            ("دکتر ملیک رینز", "فرانسوی • مرکز فرماندهی", "حرفه‌ای‌ترین تجربه آموزشی که تا به حال دیده‌ام. هر پیکسل عمدی به نظر می‌رسد.", 5, "فرانسوی"),
+            ("سوفیا کووالنکو", "روسی • فضای عمیق", "بالاخره روح زبان را درک کردم. نمای پیشرفت صورت فلکی اعتیادآور است.", 5, "روسی"),
         ]
         for name, role, quote, rating, lang_name in testimonials:
             Testimonial.objects.get_or_create(name=name, defaults={
@@ -84,11 +85,11 @@ class Command(BaseCommand):
                 "language": langs.get(lang_name), "is_featured": True
             })
 
-        # FAQs
+        # FAQs Persian
         faqs = [
-            ("How long until I reach conversational orbit?", "Most students achieve solid B1 in 6–9 weeks with focused 5h/week missions. Your trajectory is personal."),
-            ("Are the live cohorts actually live?", "Yes. Small groups (max 8) with native architect instructors. All sessions recorded for your personal log."),
-            ("Can I switch languages mid-mission?", "Absolutely. Your progress constellation travels with you across any language we offer."),
+            ("تا رسیدن به مدار مکالمه چقدر طول می‌کشد؟", "اکثر دانشجویان با ماموریت‌های متمرکز ۵ ساعت در هفته به سطح B1 محکم در ۶–۹ هفته می‌رسند. مسیر شما شخصی است."),
+            ("گروه‌های زنده واقعاً زنده هستند؟", "بله. گروه‌های کوچک (حداکثر ۸ نفر) با مربیان معمار بومی. تمام جلسات برای لاگ شخصی شما ضبط می‌شوند."),
+            ("می‌توانم وسط ماموریت زبان را عوض کنم؟", "کاملاً. صورت فلکی پیشرفت شما با شما در هر زبانی که ارائه می‌دهیم سفر می‌کند."),
         ]
         for i, (q, a) in enumerate(faqs):
             FAQ.objects.get_or_create(question=q, defaults={"answer": a, "order": i})
@@ -104,12 +105,12 @@ class Command(BaseCommand):
         )
         teacher.languages_taught.set([langs["French"], langs["Spanish"], langs["English"]])
 
-        # Courses + Curriculum (rich)
+        # Courses + Curriculum (rich Persian titles & content)
         course_data = [
-            ("Spanish — Stable Orbit", "Spanish", "B1", "Master the rhythm and soul of Spanish through cultural waypoints and live relays.", 189, 10),
-            ("French — Command Protocol", "French", "B2", "Precision, nuance, and elegance. For those who want to speak like they belong in any room.", 249, 12),
-            ("Russian — Deep Space", "Russian", "A2", "Build resilience and literary depth. The most rewarding trajectory we offer.", 219, 14),
-            ("Italian — Melodic Vector", "Italian", "A1", "Perfect entry for musical souls. Immediate wins and beautiful sounds.", 149, 6),
+            ("اسپانیایی — مدار پایدار", "اسپانیایی", "B1", "ریتم و روح اسپانیایی را از طریق ایستگاه‌های فرهنگی و رله‌های زنده مسلط شوید.", 189, 10),
+            ("فرانسوی — پروتکل فرماندهی", "فرانسوی", "B2", "دقت، ظرافت و زیبایی. برای کسانی که می‌خواهند مانند کسی که به هر اتاقی تعلق دارد صحبت کنند.", 249, 12),
+            ("روسی — فضای عمیق", "روسی", "A2", "استقامت و عمق ادبی بسازید. پاداش‌بخش‌ترین مسیری که ارائه می‌دهیم.", 219, 14),
+            ("ایتالیایی — بردار ملودیک", "ایتالیایی", "A1", "ورودی عالی برای روح‌های موسیقایی. پیروزی‌های فوری و صداهای زیبا.", 149, 6),
         ]
 
         for title, lang_name, level, desc, price, weeks in course_data:
@@ -123,20 +124,20 @@ class Command(BaseCommand):
                     "duration_weeks": weeks,
                     "is_featured": True,
                     "instructor": teacher,
-                    "what_you_will_learn": ["Reach confident conversation", "Internalize 1200+ high-impact phrases", "Navigate culture like a local", "Complete a capstone mission"],
+                    "what_you_will_learn": ["به مکالمه مطمئن برسید", "۱۲۰۰+ عبارت پرتاثیر را درونی کنید", "فرهنگ را مانند محلی‌ها ناوبری کنید", "یک ماموریت Capstone کامل کنید"],
                 }
             )
             if created or course.modules.count() == 0:
                 # Create 3-4 modules with lessons
                 for m_idx in range(1, 5):
-                    mod = Module.objects.create(course=course, title=f"Module {m_idx}: Waypoint {m_idx}", order=m_idx, description="Core transmission block.")
+                    mod = Module.objects.create(course=course, title=f"ماژول {m_idx}: ایستگاه {m_idx}", order=m_idx, description="بلوک اصلی انتقال.")
                     for l_idx in range(1, 5):
                         Lesson.objects.create(
                             module=mod,
-                            title=f"Transmission {l_idx}",
+                            title=f"انتقال {l_idx}",
                             order=l_idx,
                             content_type="text",
-                            content=f"### Beautifully written lesson content for {title} module {m_idx} lesson {l_idx}.\n\nThis is where rich, unique, non-generic educational material lives. The design around it makes learning feel like exploration.",
+                            content=f"### محتوای درس زیبا برای {title} ماژول {m_idx} درس {l_idx}.\n\nاینجا جایی است که محتوای آموزشی غنی، منحصر به فرد و غیرعمومی زندگی می‌کند. طراحی اطراف آن یادگیری را مانند اکتشاف می‌کند.",
                             duration_min=random.randint(8, 22),
                             is_preview=(l_idx == 1),
                         )

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Missions — {{ site.site_name|default:"Aether" }}{% endblock %}
+{% block title %}ماموریت‌ها — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -15,15 +15,15 @@
 <div class="max-w-7xl mx-auto px-6 pt-10 pb-20">
   <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-y-4 mb-9">
     <div>
-      <div class="section-label">THE CATALOG</div>
-      <h1 class="text-6xl tracking-[-2.8px] font-semibold">Active Missions</h1>
+      <div class="section-label">کاتالوگ</div>
+      <h1 class="text-6xl tracking-[-2.8px] font-semibold">ماموریت‌های فعال</h1>
     </div>
-    <div class="text-white/60 max-w-xs text-sm">Choose your vector. Every course is a complete self-contained trajectory with modules, lessons, and live telemetry.</div>
+    <div class="text-white/60 max-w-xs text-sm">بردار خود را انتخاب کنید. هر دوره یک مسیر کامل خودکفا با ماژول‌ها، درس‌ها و تله‌متری زنده است.</div>
   </div>
 
   <!-- Filters -->
   <div class="flex flex-wrap items-center gap-2 mb-6" x-data>
-    <a href="{% url 'catalog:course_list' %}" class="px-4 py-1.5 text-xs rounded-full border border-white/15 hover:bg-white/5 {% if not active_lang and not q %}filter-active{% endif %}">ALL SECTORS</a>
+    <a href="{% url 'catalog:course_list' %}" class="px-4 py-1.5 text-xs rounded-full border border-white/15 hover:bg-white/5 {% if not active_lang and not q %}filter-active{% endif %}">همه بخش‌ها</a>
     {% for lang in languages %}
       <a href="?lang={{ lang.slug }}{% if q %}&q={{ q }}{% endif %}" 
          class="px-4 py-1.5 text-xs rounded-full border border-white/15 hover:bg-white/5 flex items-center gap-2 {% if active_lang == lang.slug %}filter-active{% endif %}">
@@ -37,9 +37,9 @@
     <!-- Search -->
     <form method="get" class="flex w-full sm:w-auto" x-on:submit="">
       {% if active_lang %}<input type="hidden" name="lang" value="{{ active_lang }}">{% endif %}
-      <input type="text" name="q" value="{{ q }}" placeholder="Search missions or languages..." 
+      <input type="text" name="q" value="{{ q }}" placeholder="جستجوی ماموریت یا زبان..." 
              class="bg-white/5 border border-white/10 text-sm placeholder-white/40 px-4 py-2 rounded-l-2xl w-72 focus:outline-none focus:border-[var(--accent-cyan)]">
-      <button type="submit" class="px-5 bg-white/5 border border-l-0 border-white/10 rounded-r-2xl text-xs tracking-widest hover:bg-white/10">SEARCH</button>
+      <button type="submit" class="px-5 bg-white/5 border border-l-0 border-white/10 rounded-r-2xl text-xs tracking-widest hover:bg-white/10">جستجو</button>
     </form>
   </div>
 
@@ -56,7 +56,7 @@
             </div>
             <div class="mt-3 text-2xl leading-tight tracking-tight font-semibold group-hover:text-[var(--accent-cyan)] transition">{{ course.title }}</div>
           </div>
-          <div class="text-right text-xs text-white/50 whitespace-nowrap pl-3">{{ course.duration_weeks }} wks</div>
+          <div class="text-right text-xs text-white/50 whitespace-nowrap pl-3">{{ course.duration_weeks }} هفته</div>
         </div>
 
         <div class="text-sm text-white/70 mt-3 line-clamp-3">{{ course.subtitle|default:course.description|truncatewords:22 }}</div>
@@ -66,24 +66,24 @@
             <span class="font-semibold tabular-nums text-2xl tracking-tighter">{{ course.display_price }}</span>
             {% if course.format != 'self_paced' %}<span class="text-[10px] text-white/50 ml-1">{{ course.get_format_display }}</span>{% endif %}
           </div>
-          <div class="text-xs px-3 py-1 rounded-full border border-white/10 text-white/50 group-hover:border-[var(--accent-cyan)]/40 group-hover:text-[var(--accent-cyan)] transition">VIEW BRIEFING →</div>
+          <div class="text-xs px-3 py-1 rounded-full border border-white/10 text-white/50 group-hover:border-[var(--accent-cyan)]/40 group-hover:text-[var(--accent-cyan)] transition">مشاهده بریفینگ ←</div>
         </div>
 
         {% if course.instructor %}
-        <div class="mt-4 pt-4 border-t border-white/10 text-[10px] text-white/50">ARCHITECT: {{ course.instructor.user.get_full_name|default:course.instructor.user.email }}</div>
+        <div class="mt-4 pt-4 border-t border-white/10 text-[10px] text-white/50">معمار: {{ course.instructor.user.get_full_name|default:course.instructor.user.email }}</div>
         {% endif %}
       </a>
     {% endfor %}
   </div>
   {% else %}
     <div class="glass rounded-3xl p-16 text-center">
-      <div class="text-white/50">No missions match your filters yet. Try broadening your search or add published Courses in the admin.</div>
-      <a href="{% url 'catalog:course_list' %}" class="mt-4 inline-block text-xs text-[var(--accent-cyan)]">CLEAR FILTERS</a>
+      <div class="text-white/50">هیچ ماموریتی با فیلترهای شما مطابقت ندارد. جستجو را گسترده‌تر کنید یا دوره‌های منتشر شده را در ادمین اضافه کنید.</div>
+      <a href="{% url 'catalog:course_list' %}" class="mt-4 inline-block text-xs text-[var(--accent-cyan)]">پاک کردن فیلترها</a>
     </div>
   {% endif %}
 
   <div class="text-center mt-12">
-    <a href="{% url 'pricing' %}" class="text-xs tracking-widest text-white/60 hover:text-white">SEE ALL PRICING VECTORS →</a>
+    <a href="{% url 'pricing' %}" class="text-xs tracking-widest text-white/60 hover:text-white">مشاهده تمام بردارهای قیمت‌گذاری ←</a>
   </div>
 </div>
 {% endblock %}
