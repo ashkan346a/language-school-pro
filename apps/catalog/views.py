@@ -99,12 +99,15 @@ def course_detail(request, slug):
 
 @login_required
 def enroll(request, slug):
-    """Simple enroll action. Creates active enrollment (or re-activates). Defensive to avoid 500s."""
+    """Simple enroll. For paid courses, redirect to the premium checkout flow."""
     try:
         course = Course.objects.get(slug=slug, is_published=True)
     except Course.DoesNotExist:
         messages.error(request, "دوره مورد نظر یافت نشد یا در دسترس نیست.")
         return redirect('catalog:course_list')
+
+    if course.price > 0:
+        return redirect('payments:checkout', course_slug=slug)
 
     try:
         enrollment, created = Enrollment.objects.get_or_create(

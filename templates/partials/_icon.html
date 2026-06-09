@@ -1,4 +1,7 @@
-{# Reusable miniature custom space icons. Unique, non-generic. Extend as needed. #}
+{# Reusable miniature custom space icons — unique, non-generic, spacecraft-panel aesthetic.
+   Prefer {% space_icon "key" accent_color size %} (aether_extras) for new usage.
+   Legacy support kept for existing templates.
+#}
 {% if key == "planet" or key == "ringed-planet" %}
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="mini-icon"><circle cx="12" cy="12" r="5"/><ellipse cx="12" cy="12" rx="9" ry="3.2" transform="rotate(-20 12 12)"/></svg>
 {% elif key == "constellation" %}
@@ -9,6 +12,18 @@
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mini-icon"><rect x="8" y="8" width="8" height="8" rx="1"/><path d="M4 12h3M17 12h3M12 4v3M12 17v3"/><circle cx="12" cy="12" r="1.6"/></svg>
 {% elif key == "telemetry" or key == "signal" %}
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="mini-icon"><path d="M4 14l4-4 4 4 8-8"/><path d="M18 6v4M18 6h-4"/></svg>
+{% elif key in "binary,glyph" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mini-icon"><circle cx="7" cy="7" r="2"/><circle cx="17" cy="7" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 7h6M9 17h6"/></svg>
+{% elif key in "trajectory,arc" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" class="mini-icon"><path d="M4 18c3.5-4 6-4 8-4s4.5 0 8 4"/><circle cx="12" cy="11" r="2.2"/><circle cx="5.5" cy="18.5" r="1"/><circle cx="18.5" cy="18.5" r="1"/></svg>
+{% elif key in "nebula,cluster" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" class="mini-icon"><circle cx="8" cy="9" r="2.8" opacity="0.7"/><circle cx="15" cy="8" r="2.2" opacity="0.55"/><circle cx="11" cy="15" r="3" opacity="0.65"/><path d="M6 14c2 1.5 4 1 6 1.5"/></svg>
+{% elif key in "hud,panel" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mini-icon"><rect x="5" y="5" width="14" height="14" rx="1.5"/><path d="M8 9h8M8 12h5M8 15h3"/></svg>
+{% elif key == "comet" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mini-icon"><circle cx="7" cy="7" r="2"/><path d="M9 9l9 9M15 6l3-3M18 9l3 3"/></svg>
+{% elif key in "station,orbital" %}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mini-icon"><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="6.5" opacity="0.35"/></svg>
 {% else %}
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="mini-icon"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
 {% endif %}

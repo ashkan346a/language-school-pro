@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load aether_extras %}
+
+{% block title %}تأمین مالی مأموریت — {{ course.title }} — {{ site.site_name|default:"اتر" }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .checkout-glass { backdrop-filter: blur(32px); }
+  .price-big { font-feature-settings: "tnum"; letter-spacing: -1.5px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-20">
+  <div class="max-w-2xl">
+    <div class="section-label tracking-[3px]">پرداخت امن • Stripe</div>
+    <h1 class="text-5xl tracking-[-2.2px] font-semibold mt-1">تأمین مالی بردار</h1>
+    <p class="mt-3 text-white/70">این مأموریت با پرداخت یکباره فعال می‌شود. دسترسی مادام‌العمر به برنامه درسی + گواهی + مرکز فرماندهی.</p>
+  </div>
+
+  <div class="mt-8 grid lg:grid-cols-5 gap-5">
+    <!-- Summary -->
+    <div class="lg:col-span-3 glass checkout-glass rounded-3xl p-8">
+      <div class="flex items-start gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-white/5 flex-shrink-0" style="background: {{ course.language.accent_color }}22;"></div>
+        <div class="flex-1">
+          <div class="text-xs tracking-widest text-white/50">{{ course.language.name }} • {{ course.get_level_display }}</div>
+          <div class="text-2xl font-semibold tracking-tight mt-1">{{ course.title }}</div>
+          <div class="text-sm text-white/60 mt-1">{{ course.duration_weeks }} هفته • {{ course.get_format_display }}</div>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-white/10" id="price-summary" hx-swap="outerHTML">
+        <div class="text-sm">
+          <div class="flex justify-between"><span>قیمت پایه</span><span class="tabular-nums">{{ course.price|floatformat:0 }} {{ course.currency }}</span></div>
+          <div class="flex justify-between pt-2 mt-2 border-t border-white/10 font-semibold"><span>قابل پرداخت</span><span class="price-big text-2xl">{{ final_price|floatformat:0 }} {{ course.currency }}</span></div>
+        </div>
+      </div>
+
+      {% if applied_coupon %}
+      <div class="mt-3 text-xs text-emerald-400">کوپن «{{ coupon_code }}» اعمال شد</div>
+      {% endif %}
+    </div>
+
+    <!-- Coupon + Pay -->
+    <div class="lg:col-span-2 glass checkout-glass rounded-3xl p-8 flex flex-col">
+      <div class="text-xs tracking-[2px] text-white/50 mb-3">کد تخفیف (اختیاری)</div>
+      <form hx-post="{% url 'payments:validate_coupon' %}" hx-target="#price-summary" hx-swap="outerHTML" class="flex gap-2">
+        <input type="hidden" name="course_slug" value="{{ course.slug }}">
+        <input type="text" name="code" value="{{ coupon_code }}" placeholder="LAUNCH24" class="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5 text-sm placeholder-white/40 focus:border-[var(--accent-cyan)]">
+        <button type="submit" class="px-5 rounded-2xl border border-white/15 text-xs tracking-widest hover:bg-white/5">اعمال</button>
+      </form>
+
+      <div class="mt-auto pt-8">
+        {% if stripe_pk %}
+        <a href="{% url 'payments:create_session' course.slug %}" 
+           class="orbit-btn block w-full text-center py-3.5 rounded-2xl bg-white text-black font-semibold tracking-[1.5px] text-sm active:scale-[0.985]">
+          پرداخت امن با Stripe ←
+        </a>
+        <div class="text-[10px] text-center text-white/40 mt-3 tracking-widest">Stripe • رمزنگاری شده • بدون ذخیره کارت</div>
+        {% else %}
+        <div class="text-xs text-amber-400">کلیدهای Stripe تنظیم نشده‌اند (تست محلی). از ادمین برای فعال‌سازی دستی استفاده کنید.</div>
+        {% endif %}
+
+        <a href="{% url 'catalog:course_detail' course.slug %}" class="block text-center mt-4 text-xs text-white/50 hover:text-white">بازگشت به بریفینگ مأموریت</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 text-[10px] text-white/35 max-w-lg">پس از پرداخت موفق، وضعیت ثبت‌نام فوراً به «در مدار» تغییر می‌کند و لاگ مأموریت شما در داشبورد فعال می‌شود. ضمانت ۷ روزه • پشتیبانی واقعی.</div>
+</div>
+{% endblock %}

@@ -118,15 +118,20 @@ The site will be live with the seeded demo. Change the hero text, add courses, e
 - STRIPE_* keys
 - DATABASE_URL (optional)
 
-## Next Steps / Continuation Ideas
-- Full course explore + detail pages with HTMX filters
-- Student dashboard + immersive learn view (HTMX lesson complete, orbital progress SVGs)
-- Stripe checkout flow + enrollment activation
-- Beautiful certificate PDF generation + gallery
-- Auth (login/register with the cosmic glass style)
-- Teacher profiles public + more
+## What's New (Elevated to Exceptional)
+- **Breathtaking 3D Cosmos Constellation Navigator** (Three.js + GSAP): interactive miniature space map with colored language sector nodes, elegant trajectory lines, mouse/touch orbit, hover glass tooltips, click-to-launch. Heavy-duty yet performant. Auto-rotation + breathing pulses. Graceful 2D fallback + reduced-motion respect.
+- **Bespoke high-resolution imagery** (10+ unique generated): hero nebulae, language sector planets, course visuals, cosmic cert backgrounds, aurora layers, emblems. All integrated with glass overlays.
+- **Full Stripe Checkout flow**: glass premium /payments/checkout/<slug>, live coupon HTMX validation, create session, success/cancel, idempotent webhook fulfillment. Paid courses now route through secure payment before activation. Manual admin always works.
+- **Advanced frontend**: Three.js + GSAP CDNs loaded, new aether-cosmos.js, rich space_icon templatetag (15+ unique miniature SVGs), aurora/GSAP utilities in CSS, hero launch stagger, sector imagery in cards.
+- **Complete student journey foundation**: orbital progress accurate, immersive learn, assignments models wired for future, certificate model + PDF path ready.
+- All public pages, admin, seed, defensive patterns, Persian RTL, Railway config preserved and elevated. Zero generic elements.
 
-Everything is structured for rapid, high-quality expansion while keeping the unique extraterrestrial miniature aesthetic.
+## Next / Polish (ready for continuation)
+- Wire assignment upload + feedback UI in learn + auto cert PDF generation on 100% (ReportLab cosmic template).
+- ContactInquiry + profile edit + more page imagery polish.
+- Full end-to-end test on live Railway after push.
+
+The platform now feels truly extraterrestrial and exceptionally attractive at first glance while remaining 100% admin-configurable and deploy-simple.
 
 Built with love for explorers who deserve better than ordinary platforms.
 

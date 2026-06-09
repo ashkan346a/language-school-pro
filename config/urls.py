@@ -34,6 +34,9 @@ urlpatterns = [
     # Course catalog + details + enroll (public + protected enroll)
     path('courses/', include('apps.catalog.urls')),
 
+    # Payments / Stripe checkout (premium glass flow + webhook)
+    path('payments/', include('apps.payments.urls')),
+
     # Themed auth (beautiful glassmorphic instead of admin)
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),

@@ -45,8 +45,13 @@
     <!-- Subtle elegant starfield as background - properly layered behind content with overlay for readability -->
     <canvas id="hero-starfield" class="starfield" style="opacity:0.45; z-index:1;"></canvas>
     
+    <!-- High-res generated miniature extraterrestrial hero layer (unique space aesthetic) -->
+    <div class="absolute inset-0 z-[0] bg-cover bg-center opacity-70" 
+         style="background-image: url('/static/img/aether-hero-main.jpg'); background-position: 50% 38%;"></div>
+    <div class="aurora-layer"></div>
+    
     <!-- Subtle dark gradient overlay to ensure text contrast and proper design integration -->
-    <div class="absolute inset-0 bg-gradient-to-b from-[#05070f]/60 via-[#05070f]/40 to-[#05070f]/70 z-[2]"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#05070f]/55 via-[#05070f]/35 to-[#05070f]/75 z-[2]"></div>
 
     <div class="relative z-10 max-w-[820px] px-4 sm:px-6 text-center">
       <div class="inline-flex items-center px-4 py-1 rounded-full border border-white/15 text-xs tracking-[2px] text-white/60 mb-8">
@@ -93,6 +98,24 @@
     </div>
   </div>
 
+  <!-- ADVANCED 3D COSMOS CONSTELLATION NAVIGATOR (heavy-duty Three.js + GSAP per plan) -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-6">
+    <div class="flex items-end justify-between mb-3 px-1">
+      <div>
+        <div class="section-label">ناوبری صورت فلکی</div>
+        <div class="text-2xl md:text-3xl tracking-tight font-semibold">بکشید. بچرخانید. مسیر خود را انتخاب کنید.</div>
+      </div>
+      <div class="text-[10px] text-white/40 tracking-[2px] hidden md:block">DRAG TO ORBIT • CLICK NODE TO LAUNCH</div>
+    </div>
+    <div id="cosmos" class="cosmos-mount relative w-full h-[380px] md:h-[440px] glass rounded-3xl border border-white/10 overflow-hidden"
+         data-aether-cosmos
+         data-langs='[{"name":"انگلیسی","slug":"english","accent_color":"#00e5ff","short_desc":"فرماندهی جهانی"},{"name":"فرانسوی","slug":"french","accent_color":"#7c3aed","short_desc":"دقت و ظرافت"},{"name":"آلمانی","slug":"german","accent_color":"#22c55e","short_desc":"مهندسی و عمق"},{"name":"اسپانیایی","slug":"spanish","accent_color":"#ff4d94","short_desc":"ریتم و زندگی"},{"name":"ایتالیایی","slug":"italian","accent_color":"#f59e0b","short_desc":"ملودی و طراحی"}]'>
+      <!-- Three.js canvas injected by aether-cosmos.js -->
+      <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:4px_4px]"></div>
+    </div>
+    <div class="mt-2 text-[10px] text-white/35 tracking-[2.5px] text-center">صورت فلکی زنده • هر گره یک بردار زبانی است</div>
+  </section>
+
   <!-- HOW IT WORKS - Practical for real users -->
   <section class="max-w-6xl mx-auto px-6 pt-10 pb-16">
     <div class="text-center mb-10">
@@ -135,13 +158,17 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
       {% for lang in languages %}
-      <a href="{% url 'catalog:course_list' %}?lang={{ lang.slug }}" class="constellation-card card-3d group glass rounded-3xl p-6 flex flex-col border border-white/5 hover:border-[var(--accent-cyan)]/60 reveal">
-        <div class="flex items-center gap-3">
+      <a href="{% url 'catalog:course_list' %}?lang={{ lang.slug }}" class="constellation-card card-3d group glass rounded-3xl p-6 flex flex-col border border-white/5 hover:border-[var(--accent-cyan)]/60 reveal relative overflow-hidden">
+        {% if forloop.counter0 < 5 %}
+        <div class="absolute inset-0 bg-cover bg-center opacity-10 group-hover:opacity-20 transition" style="background-image:url('/static/img/sector-{{ lang.slug|lower }}.jpg');"></div>
+        {% endif %}
+        <div class="flex items-center gap-3 relative z-10">
           <span class="mini-planet" style="background:{{ lang.accent_color }}; box-shadow:0 0 18px {{ lang.accent_color }}55;"></span>
-          <span class="font-medium text-xl tracking-tight">{{ lang.name }}</span>
+          {% load aether_extras %}
+          <span class="font-medium text-xl tracking-tight flex items-center gap-1.5">{{ lang.name }} <span class="opacity-60">{% space_icon "constellation" lang.accent_color 15 %}</span></span>
         </div>
-        <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1">{{ lang.short_desc|default:"بردارهای دقیق زبانی برای کاوشگرانی که معمولی بودن را نمی‌پذیرند." }}</div>
-        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">مشاهده دوره‌ها ←</div>
+        <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1 relative z-10">{{ lang.short_desc|default:"بردارهای دقیق زبانی برای کاوشگرانی که معمولی بودن را نمی‌پذیرند." }}</div>
+        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition relative z-10">مشاهده دوره‌ها ←</div>
       </a>
       {% empty %}
       <div class="col-span-full p-8 glass rounded-3xl text-center text-white/60">در حال حاضر دوره‌های زبان‌های اصلی فعال هستند. برای اطلاعات بیشتر با ما در تماس باشید.</div>
@@ -235,7 +262,16 @@
         } catch(e) { /* graceful - CSS background still provides premium depth */ }
       }
 
-      // Gentle entrance animation for sections (CSS only, reliable)
+      // GSAP premium hero launch sequence (buttery, expensive feel)
+      if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+        tl.fromTo('.hero-clean .inline-flex', { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.1)
+          .fromTo('header h1', { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0 }, 0.18)
+          .fromTo('header p', { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85 }, 0.38)
+          .fromTo('header .orbit-btn', { y: 14, opacity: 0, scale: 0.985 }, { y: 0, opacity: 1, scale: 1, duration: 0.65, stagger: 0.08 }, 0.55);
+      }
+
+      // Gentle entrance animation for sections (CSS + GSAP if available)
       const sections = document.querySelectorAll('section');
       sections.forEach((sec, i) => {
         sec.style.opacity = '0';
@@ -246,6 +282,14 @@
           sec.style.transform = 'translateY(0)';
         }, 90 + i * 70);
       });
+
+      // Ignite the 3D cosmos after a breath (auto-init via data attr also runs)
+      setTimeout(() => {
+        const cosmos = document.getElementById('cosmos');
+        if (cosmos && window.AetherCosmos && cosmos._aetherCosmosApi) {
+          try { cosmos._aetherCosmosApi.ignite(0.92); } catch(e){}
+        }
+      }, 1250);
     });
   </script>
 {% endblock %}

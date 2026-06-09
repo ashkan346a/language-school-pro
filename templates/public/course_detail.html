@@ -40,8 +40,12 @@
         {% if enrollment %}
           <a href="{% url 'learning:learn' enrollment.id %}" class="orbit-btn px-6 py-2.5 rounded-2xl bg-emerald-500/90 text-black text-sm font-medium tracking-wider">ادامه ماموریت ←</a>
         {% else %}
-          <a href="{% url 'catalog:enroll' course.slug %}" onclick="return confirm('این مسیر را قفل می‌کنید؟ بلافاصله ثبت‌نام می‌شوید.');" 
-             class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">ثبت‌نام در این بردار</a>
+          {% if course.price > 0 %}
+            <a href="{% url 'payments:checkout' course.slug %}" class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">تأمین مالی بردار (پرداخت امن)</a>
+          {% else %}
+            <a href="{% url 'catalog:enroll' course.slug %}" onclick="return confirm('این مسیر را قفل می‌کنید؟ بلافاصله ثبت‌نام می‌شوید.');" 
+               class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">ثبت‌نام در این بردار</a>
+          {% endif %}
           <a href="{% url 'accounts:register' %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/20 hover:bg-white/5 tracking-widest">ابتدا لاگ بسازید</a>
         {% endif %}
       </div>
