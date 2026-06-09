@@ -1,8 +1,35 @@
-# Aether — Professional Extraterrestrial Language Learning Platform
+# اتر (Aether) — آکادمی زبان حرفه‌ای فرازمینی
 
-Stunning, unique, miniature space-themed language education platform built with Django 5.1. Everything is **fully configurable from the Django admin** — hero copy, languages (European focus + English), courses with rich curriculum (modules + lessons), testimonials, features, stats, coupons, users, enrollments, certificates, and more.
+نسخه کاملاً فارسی با طراحی مینیاتوری فضایی خاص و حرفه‌ای (الهام‌گرفته از Starlink و تجربیات وب premium مدرن).
 
-Inspired by the clean, premium, distinctive aesthetic of Starlink and other high-end modern web experiences. No generic elements. Custom SVG icons, glassmorphism, holographic effects, orbital progress concepts, live canvas starfield, and "mission" language throughout.
+پلتفرم آموزش زبان ساخته‌شده با Django 5.1. **همه چیز از ادمین Django کاملاً قابل تنظیم است** — متن هیرو، زبان‌ها، دوره‌ها با برنامه درسی غنی (ماژول + درس)، تستیمونیال‌ها، ویژگی‌ها، آمار، کوپن‌ها، کاربران، ثبت‌نام‌ها، گواهی‌ها و بیشتر.
+
+طراحی شیشه‌ای premium، افکت‌های هولوگرافیک، پیشرفت‌های مداری، کانواس ستاره‌ای زنده، بدون هیچ المان معمولی یا جنریک. کاملاً راست‌چین (RTL) با فونت Vazirmatn.
+
+## ویژگی‌های کلیدی (آماده تولید)
+- تجربه عمومی خیره‌کننده با هیرو + صورت فلکی تعاملی
+- کاتالوگ دوره + جزئیات + مرکز فرماندهی دانشجو (داشبورد + نمایشگر درس غوطه‌ور با HTMX)
+- ادمین قدرتمند برای تمام محتوا
+- سفر دانشجو: ثبت‌نام، پیشرفت درس، گواهی
+- آماده دیپلوی Railway (از طریق GitHub)
+
+## Railway Deploy (متصل به GitHub شما)
+1. در Railway متغیرها را ست کنید (از اسکرین‌شات شما):
+   - `DEBUG=False`
+   - `SECRET_KEY` (مقدار قوی – settings در صورت نیاز تولید می‌کند)
+   - `ALLOWED_HOSTS` شامل دامنه railway شما (در حال حاضر تنظیم است)
+2. پس از پوش به main، Railway خودکار دیپلوی می‌کند.
+3. در صورت نیاز سوپر یوزر: از Railway shell یا `python manage.py createsuperuser`
+4. `python manage.py seed_aether` برای داده دمو فارسی زیبا (اختیاری بعد از اولین migrate)
+
+## شروع محلی سریع
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+DEBUG=True python manage.py migrate
+DEBUG=True python manage.py seed_aether
+# سپس سوپر یوزر بسازید و runserver
+```
 
 ## Key Features (MVP — Production Ready Foundation)
 
