@@ -45,7 +45,7 @@
     {% empty %}
       <!-- Fallback using featured courses -->
       {% for course in courses %}
-        <div class="glass rounded-3xl p-8 flex flex-col">
+        <div class="glass card-3d rounded-3xl p-8 flex flex-col reveal">
           <div class="text-xs tracking-widest text-white/50">{{ course.get_format_display }}</div>
           <div class="text-3xl font-semibold tracking-tight mt-2">{{ course.title }}</div>
           <div class="mt-auto pt-8">

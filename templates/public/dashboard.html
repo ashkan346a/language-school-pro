@@ -17,7 +17,7 @@
     <div class="grid lg:grid-cols-2 gap-4">
       {% for enr in enrollments %}
         {% with pct=enr.progress_percent total=enr.computed_total_lessons|default:1 done=enr.computed_completed|default:0 %}
-        <div class="glass rounded-3xl p-8 flex flex-col">
+        <div class="glass card-3d rounded-3xl p-8 flex flex-col reveal">
           <div class="flex justify-between items-start">
             <div>
               <div class="text-xs tracking-widest text-white/50">{{ enr.course.language.name }} • {{ enr.course.get_level_display }}</div>
