@@ -168,6 +168,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Ensure the staticfiles directory exists at startup (prevents whitenoise
+# "No directory at: /app/staticfiles/" warning on Railway when release phase
+# hasn't run collectstatic yet or on fresh containers).
+import os
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
