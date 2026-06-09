@@ -64,4 +64,15 @@
 
   <div class="mt-6 text-[10px] text-white/40 px-1">Progress is recalculated live. Complete lessons in the immersive viewer to advance your orbit.</div>
 </div>
+
+<script>
+  // Professional orbital ring load animation (smooth fill from empty)
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.orbit').forEach((ring, i) => {
+      setTimeout(() => {
+        ring.classList.add('loaded');
+      }, 180 + i * 90);
+    });
+  });
+</script>
 {% endblock %}

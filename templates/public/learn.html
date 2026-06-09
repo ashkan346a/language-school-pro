@@ -75,7 +75,7 @@
             {% endif %}
           </div>
 
-          <!-- Complete action -->
+          <!-- Complete action - premium transmit feel -->
           <div class="mt-10 flex items-center gap-4">
             {% if progress|get_item:current_lesson.id and progress|get_item:current_lesson.id.is_completed %}
               <div class="px-5 py-2 rounded-2xl border border-emerald-400/30 text-emerald-400 text-sm flex items-center gap-2">
@@ -87,10 +87,11 @@
                 hx-post="{% url 'learning:mark_complete' current_lesson.id %}"
                 hx-swap="outerHTML"
                 hx-confirm="Mark this transmission complete and advance your orbit?"
-                class="orbit-btn px-7 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1.5px]">
-                MARK TRANSMISSION COMPLETE
+                class="orbit-btn group px-8 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1.5px] flex items-center gap-2 active:scale-[0.985] transition">
+                <span>TRANSMIT WAYPOINT</span>
+                <span class="group-active:translate-x-0.5 transition">↑</span>
               </button>
-              <div class="text-xs text-white/40">This will update your constellation progress instantly.</div>
+              <div class="text-xs text-white/40 max-w-[180px]">This updates your personal constellation and mission log instantly.</div>
             {% endif %}
           </div>
         </div>
