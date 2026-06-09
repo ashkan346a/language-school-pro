@@ -21,12 +21,12 @@ def dashboard(request):
         .order_by('-enrolled_at')
     )
 
-    # Annotate simple progress for each (recalc if needed)
+    # Annotate simple progress for each (recalc if needed) - use public attr names (Django templates forbid leading _ )
     for enr in enrollments:
         enr.recalculate_progress()  # ensures up to date
         # total lessons
-        enr._total_lessons = sum(m.lessons.count() for m in enr.course.modules.all()) or 1
-        enr._completed = LessonProgress.objects.filter(enrollment=enr, is_completed=True).count()
+        enr.computed_total_lessons = sum(m.lessons.count() for m in enr.course.modules.all()) or 1
+        enr.computed_completed = LessonProgress.objects.filter(enrollment=enr, is_completed=True).count()
 
     site, *_ = _get_site_data()
     context = {

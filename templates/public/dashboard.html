@@ -16,7 +16,7 @@
   {% if enrollments %}
     <div class="grid lg:grid-cols-2 gap-4">
       {% for enr in enrollments %}
-        {% with pct=enr.progress_percent total=enr._total_lessons|default:1 done=enr._completed|default:0 %}
+        {% with pct=enr.progress_percent total=enr.computed_total_lessons|default:1 done=enr.computed_completed|default:0 %}
         <div class="glass rounded-3xl p-8 flex flex-col">
           <div class="flex justify-between items-start">
             <div>

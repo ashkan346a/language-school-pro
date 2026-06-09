@@ -32,13 +32,15 @@
           <div class="text-xs px-3 py-1 text-white/40 tracking-widest">{{ mod.order }} — {{ mod.title }}</div>
           <div class="mt-1 space-y-px">
             {% for les in mod.lessons.all %}
-              {% with is_done=progress|get_item:les.id.is_completed|default:False is_current=current_lesson.id == les.id %}
-              <a href="{% url 'learning:learn_lesson' enrollment.id les.id %}" 
-                 class="lesson-log block px-3 py-[7px] rounded-xl text-sm flex items-center gap-2 {% if is_current %}active bg-white/5 text-white{% else %}text-white/80 hover:bg-white/5{% endif %}">
-                <span class="font-mono text-[10px] w-4 text-white/30">{{ les.order }}</span>
-                <span class="flex-1 truncate">{{ les.title }}</span>
-                {% if is_done %}<span class="text-emerald-400 text-[10px]">●</span>{% endif %}
-              </a>
+              {% with lp=progress|get_item:les.id %}
+                {% with is_done=lp.is_completed|default:False %}
+                <a href="{% url 'learning:learn_lesson' enrollment.id les.id %}" 
+                   class="lesson-log block px-3 py-[7px] rounded-xl text-sm flex items-center gap-2 {% if current_lesson and current_lesson.id == les.id %}active bg-white/5 text-white{% else %}text-white/80 hover:bg-white/5{% endif %}">
+                  <span class="font-mono text-[10px] w-4 text-white/30">{{ les.order }}</span>
+                  <span class="flex-1 truncate">{{ les.title }}</span>
+                  {% if is_done %}<span class="text-emerald-400 text-[10px]">●</span>{% endif %}
+                </a>
+                {% endwith %}
               {% endwith %}
             {% endfor %}
           </div>
