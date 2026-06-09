@@ -56,7 +56,8 @@ def course_detail(request, slug):
     # If user enrolled, pass progress info for orbital indicators
     enrollment = None
     progress_map = {}
-    if request.user.is_authenticated:
+    user = getattr(request, 'user', None)
+    if user and getattr(user, 'is_authenticated', False):
         try:
             enrollment = Enrollment.objects.select_related('course').get(student=request.user, course=course)
             for lp in LessonProgress.objects.filter(enrollment=enrollment).select_related('lesson'):
