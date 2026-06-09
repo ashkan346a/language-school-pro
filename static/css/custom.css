@@ -295,6 +295,31 @@ footer {
   letter-spacing: 1.5px;
 }
 
+/* Stronger, more premium cards for the new realistic direction */
+.constellation-card, .glass {
+  border-color: rgba(255,255,255,0.08);
+}
+.constellation-card:hover, .glass:hover {
+  border-color: rgba(0,229,255,0.25);
+}
+
+/* Better typography scale and readability for Persian */
+h1, h2, h3 {
+  font-feature-settings: "tnum";
+}
+
+/* Make sure hero text has excellent contrast and presence */
+header h1 {
+  text-shadow: 0 2px 30px rgba(0,0,0,0.35);
+}
+
+/* Subtle improvement for empty-ish sections if they ever appear */
+.col-span-full.glass {
+  background: rgba(10,12,26,0.6);
+  border-style: dashed;
+  border-color: rgba(255,255,255,0.08);
+}
+
 /* ==================== EXTRA SPECIAL MINIATURE SPACE / STARLINK-INSPIRED ==================== */
 /* Subtle animated nebula orbs for depth on hero and sections */
 .nebula {

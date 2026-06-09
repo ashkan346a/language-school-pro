@@ -25,13 +25,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Seeding Aether demo data...")
 
-        # Site settings (singleton) — Full Persian premium
+        # Site settings (singleton) — Professional Persian
         site = SiteSettings.load()
         site.site_name = "اتر"
-        site.tagline = "مسیر خود را به سوی تسلط ترسیم کنید."
-        site.hero_title = "زبان‌هایی که شما را به جهان‌های جدید می‌برند."
-        site.hero_subtitle = "پلتفرمی فراتر از تصور برای کاوشگران. هر ماموریت با زیبایی‌شناسی مینیاتوری فرازمینی دقیق طراحی شده. کاملاً از این ادمین قابل تنظیم."
-        site.hero_primary_cta = "شروع سفر"
+        site.tagline = "آموزش ممتاز زبان"
+        site.hero_title = "زبان‌هایی که شما را به جهان‌های جدید می‌برند"
+        site.hero_subtitle = "آکادمی زبان اتر — دوره‌های حرفه‌ای با اساتید بومی، برنامه‌های دقیق و نتیجه واقعی برای اهداف تحصیلی و شغلی شما."
+        site.hero_primary_cta = "شروع کنید"
         site.save()
 
         # Languages — Persian descriptions for a true Persian-first premium school

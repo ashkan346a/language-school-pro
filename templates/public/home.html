@@ -10,85 +10,51 @@
   .constellation-card { transition: transform .3s cubic-bezier(0.23,1,0.32,1), box-shadow .3s, border-color .2s; }
   .constellation-card:hover { transform: translateY(-6px); box-shadow: 0 30px 70px -20px rgba(0,0,0,.65); border-color: rgba(0,229,255,.3); }
   .mini-planet { width:22px; height:22px; border-radius:999px; display:inline-block; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
-  .section-label { letter-spacing:3px; font-size:10px; font-weight:600; opacity:.5; }
+  .section-label { letter-spacing:2.5px; font-size:10px; font-weight:600; opacity:.55; }
   .holo-card { position:relative; }
   .holo-card::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg, rgba(0,229,255,.06), rgba(124,58,237,.04), rgba(255,77,148,.03)); z-index:-1; }
-  /* Extra miniature space premium layers for Starlink-like depth */
-  .nebula-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: .18;
-    pointer-events: none;
-    z-index: 0;
-  }
 
-  /* Professional left-side nebula / miniature star dust (matches premium aesthetic in reference) */
-  .hero-particles {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 42%;
-    z-index: 2;
-    pointer-events: none;
-    background: 
-      radial-gradient(circle at 22% 18%, rgba(0,229,255,0.18) 0%, transparent 55%),
-      radial-gradient(circle at 38% 32%, rgba(124,58,237,0.12) 0%, transparent 48%),
-      radial-gradient(circle at 12% 55%, rgba(255,255,255,0.09) 0%, transparent 40%);
-    opacity: 0.85;
-  }
-  .hero-particles::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-      radial-gradient(rgba(255,255,255,0.65) 1px, transparent 1.2px);
-    background-size: 5px 7px;
-    background-position: 12px 18px;
-    opacity: 0.7;
-    animation: dust-drift 28s linear infinite;
-  }
-  @keyframes dust-drift {
-    0% { background-position: 12px 18px; }
-    100% { background-position: 12px 220px; }
+  /* Clean, elegant full-bleed premium dark hero (no awkward vertical split) */
+  .hero-clean {
+    background: linear-gradient(180deg, #05070f 0%, #0a0f1f 45%, #05070f 100%);
   }
 </style>
 {% endblock %}
 
 {% block content %}
-  <!-- HERO - Professional premium execution matching reference aesthetic -->
-  <header class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#05070f]">
-    <!-- Left-side professional miniature star dust / nebula (special design, subtle & high-end) -->
-    <div class="hero-particles"></div>
+  <!-- HERO: Clean, premium, fully Persian, high-end modern look (no weird split) -->
+  <header class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden hero-clean">
+    <!-- Subtle elegant starfield across the whole hero -->
+    <canvas id="hero-starfield" class="starfield" style="opacity:0.45;"></canvas>
 
-    <!-- Very subtle full canvas starfield for depth (kept minimal so it doesn't fight the special left dust) -->
-    <canvas id="hero-starfield" class="starfield" style="opacity:0.55;"></canvas>
+    <div class="relative z-10 max-w-[820px] px-6 text-center">
+      <div class="inline-flex items-center px-4 py-1 rounded-full border border-white/15 text-xs tracking-[2px] text-white/60 mb-8">
+        تأسیس ۱۴۰۵ • آموزش ممتاز زبان
+      </div>
 
-    <div class="relative z-10 max-w-[860px] px-6 text-center">
-      <!-- Exact premium badge -->
-      <div class="badge-space inline-flex items-center text-white/70 mb-7">تأسیس ۱۴۰۵ • برنامه فرازمینی</div>
-
-      <h1 class="text-[60px] md:text-[82px] font-semibold tracking-[-3.2px] leading-[.92] mb-5 text-white">
-        {{ site.hero_title|default:"زبان‌هایی که شما را به جهان‌های جدید می‌برند." }}
+      <h1 class="text-[56px] md:text-[78px] font-semibold tracking-[-3.4px] leading-[.9] mb-6 text-white">
+        زبان‌هایی که شما را به جهان‌های جدید می‌برند
       </h1>
 
-      <p class="max-w-[620px] mx-auto text-[17px] md:text-[18px] text-white/75 tracking-[-0.1px] leading-relaxed">
-        {{ site.hero_subtitle|default:"پلتفرمی فراتر از تصور برای کاوشگران. همه چیز از پنل مدیریت کاملاً قابل تنظیم است." }}
+      <p class="max-w-[620px] mx-auto text-[17px] md:text-[18px] text-white/70 leading-relaxed">
+        آکادمی زبان اتر — تجربه‌ای مدرن، دقیق و نتیجه‌محور برای کسانی که به کیفیت واقعی اهمیت می‌دهند. 
+        دوره‌های حرفه‌ای انگلیسی، فرانسوی، آلمانی و بیشتر با اساتید بومی و مسیرهای شخصی‌سازی‌شده.
       </p>
 
       <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
         <a href="#constellation" 
-           class="orbit-btn group inline-flex items-center justify-center gap-2.5 px-8 py-[13px] rounded-2xl bg-[#00e5ff] text-black font-semibold text-[15px] tracking-[-0.1px] active:scale-[0.985] transition">
-          {{ site.hero_primary_cta|default:"شروع سفر" }}
-          <span class="group-hover:-translate-x-0.5 transition text-lg leading-none">←</span>
+           class="orbit-btn group inline-flex items-center justify-center gap-2.5 px-9 py-[14px] rounded-2xl bg-[#00e5ff] text-black font-semibold text-[15px] tracking-[-0.1px] active:scale-[0.985] transition">
+          شروع کنید
+          <span class="group-hover:-translate-x-0.5 transition text-lg">←</span>
         </a>
 
         <a href="{% url 'catalog:course_list' %}" 
-           class="orbit-btn inline-flex items-center justify-center px-7 py-[13px] rounded-2xl border border-white/25 hover:bg-white/5 text-[15px] tracking-tight transition">
-          مشاهده همه ماموریت‌ها
+           class="orbit-btn inline-flex items-center justify-center px-8 py-[14px] rounded-2xl border border-white/25 hover:bg-white/5 text-[15px] tracking-tight transition">
+          مشاهده دوره‌ها
         </a>
       </div>
 
-      <div class="mt-12 scroll-indicator text-[10px] tracking-[4px] text-white/30">برای ترسیم مسیر خود اسکرول کنید</div>
+      <div class="mt-14 text-[10px] tracking-[3px] text-white/35">اسکرول کنید تا بیشتر ببینید</div>
     </div>
   </header>
 
@@ -101,19 +67,19 @@
           <div class="text-xs mt-1.5 text-white/50 tracking-widest">{{ stat.label | upper }}</div>
         </div>
       {% empty %}
-        <div class="col-span-full text-center text-white/40 py-2">آمار زنده را در ادمین → Core → Stats تنظیم کنید</div>
+        <!-- Defaults are provided in the view so this rarely shows -->
       {% endfor %}
     </div>
   </div>
 
-  <!-- THE CONSTELLATION -->
+  <!-- LANGUAGES / CONSTELLATION -->
   <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-14">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-9">
       <div>
-        <div class="section-label">ناوبری بخش‌ها</div>
-        <h2 class="text-6xl tracking-[-2.4px] font-semibold">صورت فلکی</h2>
+        <div class="section-label">دوره‌های زبان</div>
+        <h2 class="text-5xl md:text-6xl tracking-[-2px] font-semibold">زبان‌هایی که آموزش می‌دهیم</h2>
       </div>
-      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">مشاهده کاتالوگ کامل ماموریت‌ها ←</a>
+      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">مشاهده همه دوره‌ها ←</a>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
@@ -124,10 +90,10 @@
           <span class="font-medium text-xl tracking-tight">{{ lang.name }}</span>
         </div>
         <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1">{{ lang.short_desc|default:"بردارهای دقیق زبانی برای کاوشگرانی که معمولی بودن را نمی‌پذیرند." }}</div>
-        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">ترسیم بردار ←</div>
+        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">مشاهده دوره‌ها ←</div>
       </a>
       {% empty %}
-      <div class="col-span-full p-8 glass rounded-3xl text-center text-white/50">هیچ زبانی فعال نیست. زبان‌ها را در ادمین (بخش Core) اضافه کنید.</div>
+      <div class="col-span-full p-8 glass rounded-3xl text-center text-white/60">در حال حاضر دوره‌های زبان‌های اصلی فعال هستند. برای اطلاعات بیشتر با ما در تماس باشید.</div>
       {% endfor %}
     </div>
   </section>
@@ -135,8 +101,8 @@
   <!-- WHY AETHER / FEATURES -->
   <section class="bg-[#0a0c1a] py-16 border-y border-white/10">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="section-label mb-2">روش اتر</div>
-      <h3 class="text-5xl tracking-[-1.6px] font-semibold leading-none mb-10">طراحی شده برای کسانی که<br>مدارهای معمولی را نمی‌پذیرند.</h3>
+      <div class="section-label mb-2">چرا اتر</div>
+      <h3 class="text-5xl tracking-[-1.6px] font-semibold leading-none mb-10">یادگیری زبان، اما جدی و حرفه‌ای.<br>نه کلاس‌های معمولی.</h3>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
         {% for f in features %}
@@ -146,18 +112,18 @@
           <p class="text-[14px] text-white/70 leading-relaxed">{{ f.description }}</p>
         </div>
         {% empty %}
-          <div class="col-span-full text-white/50">ویژگی‌ها را از طریق ادمین اضافه کنید. هر کدام آیکون مینیاتوری منحصر به فرد دارد.</div>
+          <!-- Strong defaults come from the view -->
         {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- CREW LOGS -->
+  <!-- TESTIMONIALS -->
   <section class="max-w-6xl mx-auto px-6 py-20">
     <div class="flex items-end justify-between mb-8">
       <div>
-        <div class="section-label">پیام‌های خدمه</div>
-        <h3 class="text-5xl tracking-[-1.8px] font-semibold">کاوشگران واقعی. بردارهای واقعی.</h3>
+        <div class="section-label">تجربه دانشجویان</div>
+        <h3 class="text-5xl tracking-[-1.8px] font-semibold">آنها چه می‌گویند</h3>
       </div>
     </div>
 
@@ -172,15 +138,15 @@
         </div>
       </div>
       {% empty %}
-      <div class="col-span-full text-white/40">تستیمونیال‌ها را در ادمین → Core → Testimonials بذارید تا اینجا نمایش داده شوند.</div>
+      <!-- Defaults provided in view -->
       {% endfor %}
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="max-w-4xl mx-auto px-6 pb-20">
-    <div class="section-label mb-3">سوالات متداول مسیرهای ماموریت</div>
-    <h3 class="text-4xl tracking-tight font-semibold mb-8">هر آنچه پیش از پرتاب باید بدانید.</h3>
+    <div class="section-label mb-3">سوالات متداول</div>
+    <h3 class="text-4xl tracking-tight font-semibold mb-8">پاسخ سوالات رایج درباره دوره‌ها</h3>
 
     <div class="divide-y divide-white/10 border-y border-white/10">
       {% for faq in faqs %}
@@ -189,23 +155,22 @@
         <div class="pt-2 text-white/70 text-[15px] pr-8">{{ faq.answer }}</div>
       </div>
       {% empty %}
-        <div class="py-6 text-white/50">سوالات متداول را در ادمین اضافه کنید تا این لیست زیبا نمایش داده شود.</div>
       {% endfor %}
     </div>
   </section>
 
-  <!-- FINAL HORIZON CTA -->
+  <!-- FINAL CTA - Realistic and professional -->
   <section id="launch" class="max-w-4xl mx-auto px-6 pb-24">
     <div class="glass rounded-3xl px-10 py-14 text-center border border-white/10">
-      <div class="text-[var(--accent-cyan)] tracking-[3.5px] text-xs mb-2">افق در انتظار است</div>
-      <h3 class="text-6xl tracking-[-2px] font-semibold">آماده‌اید مسیر جدیدی ترسیم کنید؟</h3>
-      <p class="mt-3 max-w-md mx-auto text-white/70">به گروه بعدی کاوشگران زبان بپیوندید. هر المان این پلتفرم از مرکز فرماندهی زنده قابل ویرایش است.</p>
+      <div class="text-[var(--accent-cyan)] tracking-[2.5px] text-xs mb-3">شروع کنید</div>
+      <h3 class="text-5xl md:text-6xl tracking-[-1.8px] font-semibold leading-tight">آماده‌اید سطح زبان خود را<br>به شکل جدی ارتقا دهید؟</h3>
+      <p class="mt-4 max-w-lg mx-auto text-white/70">به صدها دانشجویی بپیوندید که با برنامه‌های دقیق و اساتید حرفه‌ای اتر به اهداف تحصیلی، شغلی و شخصی خود رسیده‌اند.</p>
 
-      <div class="mt-8 flex justify-center gap-3">
-        <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">کاوش ماموریت‌ها</a>
-        <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">ایجاد لاگ شخصی</a>
+      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+        <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">مشاهده دوره‌ها</a>
+        <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">ایجاد حساب رایگان</a>
       </div>
-      <div class="mt-4 text-[10px] text-white/40 tracking-widest">کاملاً قابل تنظیم • بدون نیاز به کد</div>
+      <div class="mt-5 text-[10px] text-white/45 tracking-widest">۷ روز ضمانت رضایت • بدون تعهد بلندمدت</div>
     </div>
   </section>
 
@@ -214,20 +179,19 @@
     document.addEventListener('DOMContentLoaded', () => {
       const c = document.getElementById('hero-starfield');
       if (c && window.AetherStarfield) {
-        // More subtle, premium, miniature depth for professional aesthetic (not overwhelming the special left dust)
-        new AetherStarfield(c, {count: 140, speed: 0.045, color: '#9ca3af'});
+        new AetherStarfield(c, {count: 160, speed: 0.035, color: '#a1a1aa'});
       }
 
-      // Professional staggered fade-up for key sections (better user appeal)
+      // Gentle entrance animation for sections
       const sections = document.querySelectorAll('section');
       sections.forEach((sec, i) => {
         sec.style.opacity = '0';
-        sec.style.transform = 'translateY(18px)';
+        sec.style.transform = 'translateY(16px)';
         setTimeout(() => {
-          sec.style.transition = 'opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1)';
+          sec.style.transition = 'opacity 0.65s cubic-bezier(0.23,1,0.32,1), transform 0.65s cubic-bezier(0.23,1,0.32,1)';
           sec.style.opacity = '1';
           sec.style.transform = 'translateY(0)';
-        }, 120 + i * 80);
+        }, 90 + i * 70);
       });
     });
   </script>

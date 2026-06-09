@@ -38,19 +38,19 @@
         </div>
       </a>
 
-      <!-- Desktop Navigation (RTL aware) -->
+      <!-- Desktop Navigation (RTL aware, professional) -->
       <div class="hidden md:flex items-center gap-6 text-sm">
-        <a href="{% url 'home' %}#constellation" class="hover:text-[var(--accent-cyan)] transition">صورت فلکی</a>
-        <a href="{% url 'catalog:course_list' %}" class="hover:text-[var(--accent-cyan)] transition">ماموریت‌ها</a>
-        <a href="{% url 'about' %}" class="hover:text-[var(--accent-cyan)] transition">آکادمی</a>
-        <a href="{% url 'pricing' %}" class="hover:text-[var(--accent-cyan)] transition">مانیفست</a>
+        <a href="{% url 'home' %}#constellation" class="hover:text-[var(--accent-cyan)] transition">دوره‌ها</a>
+        <a href="{% url 'catalog:course_list' %}" class="hover:text-[var(--accent-cyan)] transition">همه زبان‌ها</a>
+        <a href="{% url 'about' %}" class="hover:text-[var(--accent-cyan)] transition">درباره اتر</a>
+        <a href="{% url 'pricing' %}" class="hover:text-[var(--accent-cyan)] transition">تعرفه‌ها</a>
 
         {% if user.is_authenticated %}
-          <a href="{% url 'learning:dashboard' %}" class="px-3 py-1 rounded-full border border-white/20 hover:bg-white/5 text-xs tracking-widest">مرکز فرماندهی</a>
+          <a href="{% url 'learning:dashboard' %}" class="px-3 py-1 rounded-full border border-white/20 hover:bg-white/5 text-xs tracking-widest">داشبورد من</a>
           <a href="{% url 'logout' %}" class="text-white/60 hover:text-white text-xs">خروج</a>
         {% else %}
-          <a href="{% url 'login' %}" class="hover:text-[var(--accent-cyan)] transition text-xs tracking-widest">ورود فرماندهی</a>
-          <a href="{% url 'accounts:register' %}" class="orbit-btn px-4 py-1.5 rounded-full bg-white text-black font-medium text-xs tracking-[1.5px]">شروع ماموریت</a>
+          <a href="{% url 'login' %}" class="hover:text-[var(--accent-cyan)] transition text-xs tracking-widest">ورود</a>
+          <a href="{% url 'accounts:register' %}" class="orbit-btn px-4 py-1.5 rounded-full bg-white text-black font-medium text-xs tracking-[1.5px]">ثبت‌نام رایگان</a>
         {% endif %}
 
         <a href="/admin/" class="px-3 py-1 rounded border border-white/10 hover:bg-white/5 text-[10px] text-white/50">ادمین</a>
@@ -69,17 +69,17 @@
     <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
          class="md:hidden border-t border-white/10 bg-[#05070f]/95 backdrop-blur-xl px-6 py-4 text-sm">
       <div class="flex flex-col gap-y-3">
-        <a href="{% url 'home' %}#constellation" class="py-1 hover:text-[var(--accent-cyan)]">صورت فلکی</a>
-        <a href="{% url 'catalog:course_list' %}" class="py-1 hover:text-[var(--accent-cyan)]">ماموریت‌ها</a>
-        <a href="{% url 'about' %}" class="py-1 hover:text-[var(--accent-cyan)]">آکادمی</a>
-        <a href="{% url 'pricing' %}" class="py-1 hover:text-[var(--accent-cyan)]">مانیفست</a>
+        <a href="{% url 'home' %}#constellation" class="py-1 hover:text-[var(--accent-cyan)]">دوره‌ها</a>
+        <a href="{% url 'catalog:course_list' %}" class="py-1 hover:text-[var(--accent-cyan)]">همه زبان‌ها</a>
+        <a href="{% url 'about' %}" class="py-1 hover:text-[var(--accent-cyan)]">درباره اتر</a>
+        <a href="{% url 'pricing' %}" class="py-1 hover:text-[var(--accent-cyan)]">تعرفه‌ها</a>
 
         {% if user.is_authenticated %}
-          <a href="{% url 'learning:dashboard' %}" class="py-1">مرکز فرماندهی</a>
+          <a href="{% url 'learning:dashboard' %}" class="py-1">داشبورد من</a>
           <a href="{% url 'logout' %}" class="py-1 text-white/60">خروج</a>
         {% else %}
-          <a href="{% url 'login' %}" class="py-1">ورود فرماندهی</a>
-          <a href="{% url 'accounts:register' %}" class="py-1 text-[var(--accent-cyan)]">شروع ماموریت</a>
+          <a href="{% url 'login' %}" class="py-1">ورود</a>
+          <a href="{% url 'accounts:register' %}" class="py-1 text-[var(--accent-cyan)]">ثبت‌نام رایگان</a>
         {% endif %}
         <a href="/admin/" class="py-1 text-white/50 text-xs">ادمین</a>
       </div>
@@ -98,8 +98,8 @@
   </main>
 
   <footer class="mt-16 border-t border-white/10 py-10 text-center text-[10px] text-white/40 tracking-[2px]">
-    © {{ site.site_name|default:"اتر" }} آکادمی زبان — مسیرهای دقیق برای ذهن‌های فرازمینی
-    <div class="mt-1 opacity-50">فضای مینیاتوری. تسلط حداکثری.</div>
+    © {{ site.site_name|default:"اتر" }} آکادمی زبان — آموزش حرفه‌ای با استانداردهای بین‌المللی
+    <div class="mt-1 opacity-50">کیفیت واقعی. نتیجه ملموس.</div>
   </footer>
 
   {% block scripts %}{% endblock %}
