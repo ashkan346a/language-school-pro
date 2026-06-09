@@ -87,7 +87,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # Custom Aether context (site settings etc.) can be added later
+                # site injected explicitly in our public views for compatibility
             ],
         },
     },

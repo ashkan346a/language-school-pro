@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ
+from .models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ, PricingTier, CrewMember
 
 
 @admin.register(SiteSettings)
@@ -47,3 +47,19 @@ class FAQAdmin(admin.ModelAdmin):
     list_display = ('question', 'category', 'order', 'is_active')
     list_editable = ('order', 'is_active', 'category')
     search_fields = ('question',)
+
+
+@admin.register(PricingTier)
+class PricingTierAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'currency', 'period', 'is_featured', 'is_active', 'order')
+    list_editable = ('is_featured', 'is_active', 'order', 'price')
+    list_filter = ('is_active', 'is_featured')
+    search_fields = ('name', 'tagline')
+
+
+@admin.register(CrewMember)
+class CrewMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'role', 'is_active', 'order')
+    list_editable = ('is_active', 'order')
+    search_fields = ('name', 'role', 'bio')
+    autocomplete_fields = ('teacher_profile',)

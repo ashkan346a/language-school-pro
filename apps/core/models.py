@@ -126,3 +126,45 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question[:60]
+
+
+class PricingTier(models.Model):
+    """Admin-configurable pricing/manifest tiers for the public pricing page."""
+    name = models.CharField(max_length=80)
+    tagline = models.CharField(max_length=120, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    currency = models.CharField(max_length=3, default="USD")
+    period = models.CharField(max_length=30, default="one-time", help_text="e.g. one-time, 8 weeks, lifetime")
+    features = models.JSONField(default=list, blank=True, help_text="List of included mission features e.g. ['Full curriculum', 'Live relays']")
+    is_featured = models.BooleanField(default=False)
+    cta_label = models.CharField(max_length=40, default="Select Trajectory")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Pricing Tier"
+        verbose_name_plural = "Pricing Tiers"
+
+    def __str__(self):
+        return f"{self.name} — {self.price} {self.currency}"
+
+
+class CrewMember(models.Model):
+    """Public facing 'Architects' / teachers for about page. Links to TeacherProfile optionally."""
+    name = models.CharField(max_length=80)
+    role = models.CharField(max_length=120, default="Language Architect")
+    bio = models.TextField(blank=True)
+    quote = models.CharField(max_length=200, blank=True)
+    accent_color = models.CharField(max_length=7, default="#00e5ff")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    teacher_profile = models.ForeignKey('accounts.TeacherProfile', on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Crew Member"
+        verbose_name_plural = "Crew"
+
+    def __str__(self):
+        return self.name

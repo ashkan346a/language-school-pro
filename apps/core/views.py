@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ
+from .models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ, PricingTier, CrewMember
 
 
 def _get_site_data():
@@ -49,12 +49,22 @@ def _get_site_data():
     except Exception:
         faqs = []
 
-    return site, languages, stats, features, testimonials, faqs
+    try:
+        pricing_tiers = list(PricingTier.objects.filter(is_active=True)[:6])
+    except Exception:
+        pricing_tiers = []
+
+    try:
+        crew = list(CrewMember.objects.filter(is_active=True)[:6])
+    except Exception:
+        crew = []
+
+    return site, languages, stats, features, testimonials, faqs, pricing_tiers, crew
 
 
 def home(request):
     """Stunning public landing page. Resilient on first deploy."""
-    site, languages, stats, features, testimonials, faqs = _get_site_data()
+    site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
 
     context = {
         'site': site,
@@ -63,15 +73,32 @@ def home(request):
         'features': features,
         'testimonials': testimonials,
         'faqs': faqs,
+        'pricing_tiers': pricing_tiers,
+        'crew': crew,
     }
     return render(request, 'public/home.html', context)
 
 
 def about(request):
-    site, _, _, _, _, _ = _get_site_data()
-    return render(request, 'public/about.html', {'site': site})
+    site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
+    return render(request, 'public/about.html', {
+        'site': site,
+        'crew': crew,
+        'languages': languages,
+        'features': features,
+    })
 
 
 def pricing(request):
-    site, _, _, _, _, _ = _get_site_data()
-    return render(request, 'public/pricing.html', {'site': site})
+    site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
+    # Fallback to some courses if no explicit tiers
+    from apps.catalog.models import Course
+    try:
+        courses_for_pricing = list(Course.objects.filter(is_published=True, is_featured=True)[:3])
+    except Exception:
+        courses_for_pricing = []
+    return render(request, 'public/pricing.html', {
+        'site': site,
+        'pricing_tiers': pricing_tiers or [],
+        'courses': courses_for_pricing,
+    })

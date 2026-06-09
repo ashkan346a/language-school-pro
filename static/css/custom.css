@@ -90,3 +90,9 @@
 
 /* Starfield canvas container hint */
 #hero-starfield { mix-blend-mode: screen; opacity: 0.9; }
+
+/* Extra premium touches for new pages */
+.lesson-log { font-feature-settings: "tnum"; }
+.orbit circle { vector-effect: non-scaling-stroke; }
+.prose-invert a { color: #00e5ff; text-decoration: underline; text-underline-offset: 2px; }
+.glass input, .glass textarea { background: rgba(255,255,255,.03); }

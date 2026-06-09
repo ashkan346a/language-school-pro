@@ -1,20 +1,68 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><title>Manifest • Aether</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="/static/css/custom.css">
-</head>
-<body class="bg-[#05070f] text-[#e0e7ff] p-10">
-<div class="max-w-4xl mx-auto">
-<h1 class="text-5xl font-semibold tracking-tighter">Mission Manifest</h1>
-<p class="mt-3 text-white/60">Transparent pricing. Every course is a complete, self-contained trajectory. Admin-configurable.</p>
+{% extends "base.html" %}
 
-<div class="mt-10 grid md:grid-cols-3 gap-6">
-  <div class="glass rounded-3xl p-8"><div class="text-sm opacity-60">SELF-PACED</div><div class="text-3xl mt-2 font-semibold">$149–249</div><div class="text-xs mt-1">One-time • Lifetime access</div></div>
-  <div class="glass rounded-3xl p-8 border border-[var(--accent-cyan)]"><div class="text-sm opacity-60">LIVE COHORT</div><div class="text-3xl mt-2 font-semibold">$289</div><div class="text-xs mt-1">8 weeks • Small groups • Recordings</div></div>
-  <div class="glass rounded-3xl p-8"><div class="text-sm opacity-60">PRIVATE COMMAND</div><div class="text-3xl mt-2 font-semibold">Contact</div><div class="text-xs mt-1">1:1 with Lead Architects</div></div>
-</div>
+{% block title %}Manifest — {{ site.site_name|default:"Aether" }}{% endblock %}
 
-<p class="mt-10 text-xs text-white/40">All prices and copy are fully editable from the Django admin (add pricing tiers as a simple model later).</p>
-<a href="/" class="block mt-6 text-[var(--accent-cyan)]">← Back to the stars</a>
+{% block content %}
+<div class="max-w-6xl mx-auto px-6 pt-12 pb-16">
+  <div class="max-w-2xl">
+    <div class="section-label">THE MISSION MANIFEST</div>
+    <h1 class="text-6xl tracking-[-2.6px] font-semibold mt-2">Choose your trajectory.</h1>
+    <p class="mt-4 text-xl text-white/70">Transparent vectors. No fine print. Every course is a complete, self-contained mission. All prices and tiers are fully live-editable from the admin.</p>
+  </div>
+
+  <!-- Pricing Tiers -->
+  <div class="mt-12 grid md:grid-cols-3 gap-4">
+    {% for tier in pricing_tiers %}
+      <div class="glass rounded-3xl p-8 flex flex-col {% if tier.is_featured %}border border-[var(--accent-cyan)]/60 ring-1 ring-[var(--accent-cyan)]/10{% endif %}">
+        <div>
+          <div class="text-xs tracking-[2.5px] text-white/50">{{ tier.period | upper }}</div>
+          <div class="mt-2 text-4xl font-semibold tracking-tighter">{{ tier.name }}</div>
+          {% if tier.tagline %}<div class="text-sm mt-1 text-white/60">{{ tier.tagline }}</div>{% endif %}
+        </div>
+
+        <div class="my-8">
+          {% if tier.price > 0 %}
+            <span class="text-6xl font-semibold tabular-nums tracking-[-1.5px]">{{ tier.price|floatformat:0 }}</span>
+            <span class="text-white/60 ml-1">{{ tier.currency }}</span>
+          {% else %}
+            <span class="text-4xl font-semibold tracking-tight">Contact</span>
+          {% endif %}
+          <div class="text-xs text-white/50 mt-0.5">{{ tier.period }}</div>
+        </div>
+
+        <ul class="space-y-2 text-sm flex-1 mb-8 text-white/80">
+          {% for feat in tier.features %}
+            <li class="flex gap-2.5"><span class="text-[var(--accent-cyan)] mt-px">•</span> <span>{{ feat }}</span></li>
+          {% endfor %}
+        </ul>
+
+        {% if tier.price == 0 %}
+          <a href="{% url 'about' %}" class="mt-auto orbit-btn block text-center py-3 rounded-2xl border border-white/20 hover:bg-white/5 text-sm tracking-widest">{{ tier.cta_label }}</a>
+        {% else %}
+          <a href="{% url 'catalog:course_list' %}" class="mt-auto orbit-btn block text-center py-3 rounded-2xl {% if tier.is_featured %}bg-[var(--accent-cyan)] text-black{% else %}border border-white/20 hover:bg-white/5{% endif %} text-sm tracking-widest">{{ tier.cta_label }}</a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <!-- Fallback using featured courses -->
+      {% for course in courses %}
+        <div class="glass rounded-3xl p-8 flex flex-col">
+          <div class="text-xs tracking-widest text-white/50">{{ course.get_format_display }}</div>
+          <div class="text-3xl font-semibold tracking-tight mt-2">{{ course.title }}</div>
+          <div class="mt-auto pt-8">
+            <div class="text-5xl font-semibold tabular-nums tracking-tighter">{{ course.display_price }}</div>
+            <a href="{% url 'catalog:course_detail' course.slug %}" class="mt-6 block orbit-btn text-center py-3 rounded-2xl bg-white text-black text-sm tracking-widest">SELECT THIS VECTOR</a>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-span-3 glass p-10 rounded-3xl text-center text-white/60">Add Pricing Tiers (Core) or Featured Courses to populate the manifest. Everything here is admin-configurable.</div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  <div class="mt-12 text-center text-xs text-white/40 tracking-[2px]">All trajectories include lifetime access to the curriculum + certificate upon mission completion. Live cohorts include recordings.</div>
+
+  <div class="mt-6 text-center">
+    <a href="{% url 'catalog:course_list' %}" class="text-[var(--accent-cyan)] text-sm">Browse the complete mission catalog →</a>
+  </div>
 </div>
-</body></html>
+{% endblock %}

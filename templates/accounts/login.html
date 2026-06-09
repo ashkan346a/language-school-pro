@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Command Login — {{ site.site_name|default:"Aether" }}{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-6 pt-16 pb-24">
+  <div class="text-center mb-9">
+    <div class="inline text-[10px] tracking-[4px] px-3 py-1 border border-white/10 rounded-full">SECURE ACCESS</div>
+    <h1 class="mt-4 text-5xl tracking-[-1.8px] font-semibold">Welcome back, explorer.</h1>
+    <p class="text-white/60 mt-2">Sign in to your flight log to continue your trajectories.</p>
+  </div>
+
+  <div class="glass rounded-3xl p-9">
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div>
+        <label class="text-xs tracking-widest text-white/50 block mb-1.5">COMMAND EMAIL OR CALLSIGN</label>
+        <input type="text" name="username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm placeholder-white/40 focus:border-[var(--accent-cyan)] outline-none" placeholder="you@orion.example" required>
+      </div>
+      <div>
+        <label class="text-xs tracking-widest text-white/50 block mb-1.5">PASSCODE</label>
+        <input type="password" name="password" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm placeholder-white/40 focus:border-[var(--accent-cyan)] outline-none" required>
+      </div>
+
+      <button type="submit" class="w-full orbit-btn mt-2 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-[1.5px]">ENTER MISSION CONTROL</button>
+    </form>
+
+    <div class="text-center text-xs mt-6 text-white/50">No account yet? <a href="{% url 'accounts:register' %}" class="text-[var(--accent-cyan)] hover:underline">Initiate your log →</a></div>
+    <div class="text-center text-[10px] mt-1"><a href="/admin/login/" class="text-white/30 hover:text-white/50">Admin access</a></div>
+  </div>
+</div>
+{% endblock %}

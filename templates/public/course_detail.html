@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static aether_extras %}
+
+{% block title %}{{ course.title }} — {{ site.site_name|default:"Aether" }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .waypoint { transition: all .2s ease; }
+  .waypoint:hover { background: rgba(255,255,255,.03); }
+  .orbit { width: 78px; height: 78px; }
+  .orbit circle { transition: stroke-dashoffset .5s ease; }
+  .lesson-row { transition: background .1s; }
+  .lesson-row:hover { background: rgba(15,20,41,.6); }
+  .mini-constellation line { stroke: rgba(255,255,255,.15); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-6 pt-9 pb-20">
+  <!-- Top meta -->
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/50 tracking-[1px]">
+    <a href="{% url 'catalog:course_list' %}" class="hover:text-[var(--accent-cyan)]">← ALL MISSIONS</a>
+    <span class="hidden md:inline">/</span>
+    <span style="color:{{ course.language.accent_color }}">{{ course.language.name }}</span>
+    <span>{{ course.get_level_display }}</span>
+    <span class="px-2 py-px rounded bg-white/5 text-white/60">{{ course.get_format_display }}</span>
+  </div>
+
+  <div class="mt-3 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+    <div class="max-w-3xl">
+      <h1 class="text-6xl lg:text-7xl tracking-[-3.4px] font-semibold leading-[.92]">{{ course.title }}</h1>
+      {% if course.subtitle %}<p class="mt-3 text-2xl text-white/70 tracking-tight">{{ course.subtitle }}</p>{% endif %}
+    </div>
+
+    <div class="lg:text-right pt-1 lg:pt-3">
+      <div class="text-5xl font-semibold tabular-nums tracking-[-1.5px]">{{ course.display_price }}</div>
+      <div class="text-xs text-white/50">{{ course.duration_weeks }} WEEK TRAJECTORY • {{ course.max_enrollments|default:"UNLIMITED" }} SEATS</div>
+
+      <div class="mt-4 flex lg:justify-end gap-2">
+        {% if enrollment %}
+          <a href="{% url 'learning:learn' enrollment.id %}" class="orbit-btn px-6 py-2.5 rounded-2xl bg-emerald-500/90 text-black text-sm font-medium tracking-wider">CONTINUE MISSION →</a>
+        {% else %}
+          <a href="{% url 'catalog:enroll' course.slug %}" onclick="return confirm('Lock in this trajectory? You will be enrolled immediately.');" 
+             class="orbit-btn px-7 py-2.5 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1px]">ENROLL IN THIS VECTOR</a>
+          <a href="{% url 'accounts:register' %}" class="px-5 py-2.5 text-xs rounded-2xl border border-white/20 hover:bg-white/5 tracking-widest">CREATE LOG FIRST</a>
+        {% endif %}
+      </div>
+      <div class="text-[10px] text-white/40 mt-1.5 lg:text-right">Admin-editable • Instant activation</div>
+    </div>
+  </div>
+
+  <!-- Mission brief + what you will learn -->
+  <div class="mt-10 grid lg:grid-cols-5 gap-4">
+    <div class="lg:col-span-3 glass rounded-3xl p-8">
+      <div class="uppercase text-xs tracking-[3px] text-white/50 mb-3">MISSION BRIEFING</div>
+      <div class="prose prose-invert max-w-none text-[15px] text-white/85 leading-relaxed">
+        {{ course.description|linebreaks }}
+      </div>
+      {% if course.requirements %}
+        <div class="mt-6 pt-6 border-t border-white/10 text-sm">
+          <span class="text-xs tracking-widest text-white/50">PREREQUISITES</span><br>
+          {{ course.requirements }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="lg:col-span-2 glass rounded-3xl p-8">
+      <div class="text-xs tracking-[3px] text-white/50 mb-3">WHAT YOU WILL ACHIEVE</div>
+      <ul class="space-y-[13px] text-[14.5px]">
+        {% for item in course.what_you_will_learn %}
+          <li class="flex gap-3"><span class="mt-1.5 text-[var(--accent-cyan)] text-[9px]">●</span> <span>{{ item }}</span></li>
+        {% empty %}
+          <li class="text-white/50 text-sm">Objectives are configured in the admin under the course.</li>
+        {% endfor %}
+      </ul>
+
+      {% if enrollment %}
+      <div class="mt-7 pt-5 border-t border-white/10 text-xs">
+        <span class="px-2.5 py-1 bg-emerald-400/10 text-emerald-400 rounded">YOU ARE IN ORBIT</span>
+        <span class="ml-2 text-white/50">{{ enrollment.progress_percent }}% COMPLETE</span>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Flight Plan / Curriculum with orbital progress -->
+  <div class="mt-8">
+    <div class="flex items-center justify-between mb-4 px-1">
+      <div>
+        <div class="section-label">FLIGHT PLAN</div>
+        <div class="text-3xl tracking-tight font-semibold">Curriculum • {{ total_lessons }} transmissions</div>
+      </div>
+      {% if enrollment %}
+        <div class="text-right">
+          <div class="font-mono text-3xl tabular-nums tracking-tighter">{{ progress_percent }}<span class="text-base align-super text-white/50">%</span></div>
+          <div class="text-xs -mt-1 text-white/50">COMPLETE</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="glass rounded-3xl overflow-hidden divide-y divide-white/10">
+      {% for module in course.modules.all %}
+        <div class="p-7 waypoint">
+          <div class="flex items-center gap-4">
+            <div class="text-xs px-3 py-px rounded bg-white/5 text-white/60 tracking-widest">MODULE {{ module.order }}</div>
+            <div class="font-semibold text-xl tracking-tight">{{ module.title }}</div>
+            {% if module.description %}<div class="text-sm text-white/50 ml-2">{{ module.description }}</div>{% endif %}
+          </div>
+
+          <div class="mt-4 pl-1 space-y-px">
+            {% for lesson in module.lessons.all %}
+              <div class="lesson-row flex items-center gap-4 px-4 py-2.5 rounded-xl text-sm group">
+                <div class="w-5 text-white/30 tabular-nums text-right">{{ lesson.order }}.</div>
+
+                <div class="flex-1 flex items-center gap-2">
+                  <a href="{% if enrollment %}{% url 'learning:learn_lesson' enrollment.id lesson.id %}{% else %}#{% endif %}" class="font-medium group-hover:text-[var(--accent-cyan)] transition">
+                    {{ lesson.title }}
+                  </a>
+                  {% if lesson.is_preview %}<span class="text-[9px] px-1.5 py-px border border-white/20 rounded text-white/40">PREVIEW</span>{% endif %}
+                  <span class="text-white/30 text-xs ml-1">· {{ lesson.duration_min }} min</span>
+                </div>
+
+                <div>
+                  {% if enrollment %}
+                    {% if progress_map|get_item:lesson.id and progress_map|get_item:lesson.id.is_completed %}
+                      <span class="text-emerald-400 text-xs tracking-widest">WAYPOINT REACHED</span>
+                    {% else %}
+                      <a href="{% url 'learning:learn_lesson' enrollment.id lesson.id %}" class="text-xs px-3 py-1 rounded border border-white/10 hover:bg-white/5 group-hover:border-[var(--accent-cyan)]/40">TRANSMIT</a>
+                    {% endif %}
+                  {% else %}
+                    <span class="text-white/30 text-xs">ENROLL TO UNLOCK</span>
+                  {% endif %}
+                </div>
+              </div>
+            {% empty %}
+              <div class="pl-9 text-xs text-white/40">No lessons yet. Add in admin under this module.</div>
+            {% endfor %}
+          </div>
+        </div>
+      {% empty %}
+        <div class="p-8 text-white/50">Curriculum modules will appear here once added to the course in the admin. Rich lessons support Markdown.</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Architect + CTA -->
+  <div class="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 px-2 text-sm">
+    {% if course.instructor %}
+    <div class="text-white/60">Lead Architect: <span class="text-white">{{ course.instructor }}</span> — {{ course.instructor.short_quote }}</div>
+    {% endif %}
+
+    <div>
+      {% if enrollment %}
+        <a href="{% url 'learning:learn' enrollment.id %}" class="orbit-btn px-8 py-2 rounded-2xl bg-white text-black text-sm font-medium tracking-wider">RETURN TO MISSION DECK →</a>
+      {% else %}
+        <a href="{% url 'catalog:enroll' course.slug %}" class="orbit-btn px-8 py-2 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold tracking-wider text-sm">SECURE YOUR SEAT IN THIS COHORT</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Very lightweight: clicking any lesson row that has a link will navigate (already links)
+  // Future: could add a tiny constellation SVG per module here
+</script>
+{% endblock %}

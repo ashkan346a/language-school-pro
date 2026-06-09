@@ -11,7 +11,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
-from apps.core.models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ
+from apps.core.models import SiteSettings, Language, Stat, Feature, Testimonial, FAQ, PricingTier, CrewMember
 from apps.catalog.models import Course, Module, Lesson
 from apps.accounts.models import TeacherProfile
 from apps.payments.models import Coupon
@@ -144,6 +144,35 @@ class Command(BaseCommand):
         # Coupons
         Coupon.objects.get_or_create(code="LAUNCH24", defaults={"percent_off": 24, "max_uses": 200, "is_active": True})
         Coupon.objects.get_or_create(code="CREW10", defaults={"percent_off": 10, "max_uses": 500, "is_active": True})
+
+        # Pricing Tiers (for Manifest page)
+        tiers = [
+            ("Self-Paced Vector", "Complete autonomy. Lifetime access to transmissions.", 149, "one-time", ["Full constellation curriculum", "Progress orbs & telemetry", "Community relay access", "Certificate on completion"], False, 1),
+            ("Live Cohort — Command", "Small crew. 8 weeks. Real-time architects.", 289, "8 weeks", ["Everything in Self-Paced", "Live vector sessions (max 8)", "Session recordings in your log", "Priority mission support", "Capstone review"], True, 2),
+            ("Private Command", "1:1 with Lead Architect. Bespoke trajectory.", 0, "contact", ["Custom curriculum design", "Unlimited private relays", "Direct telemetry channel", "Personalized certificate + debrief", "Post-mission consultation"], False, 3),
+        ]
+        for name, tag, price, period, feats, featd, ord_ in tiers:
+            PricingTier.objects.get_or_create(
+                name=name,
+                defaults={
+                    "tagline": tag,
+                    "price": price,
+                    "period": period,
+                    "features": feats,
+                    "is_featured": featd,
+                    "order": ord_,
+                    "cta_label": "Contact Command" if price == 0 else "Begin Mission",
+                }
+            )
+
+        # Crew for About
+        crew_data = [
+            ("Liora Vale", "Lead Language Architect", "15 years charting fluency trajectories. French & Spanish specialist.", "Language is the final frontier.", "#00e5ff"),
+            ("Captain Kael Soto", "Orbital Linguist", "Deep space Russian & German programs. Known for elegant waypoint design.", "Every accent is a new star.", "#ff4d94"),
+            ("Dr. Mira Solari", "Telemetry & Culture", "Italian & Portuguese vectors. Makes culture feel like home port.", "Fluency is belonging.", "#7c3aed"),
+        ]
+        for nm, role, bio, qt, col in crew_data:
+            CrewMember.objects.get_or_create(name=nm, defaults={"role": role, "bio": bio, "quote": qt, "accent_color": col})
 
         self.stdout.write(self.style.SUCCESS("Aether seed complete. Visit /admin to explore and customize everything."))
         self.stdout.write("Recommended: createsuperuser, then login and tweak hero text, add more courses, etc.")

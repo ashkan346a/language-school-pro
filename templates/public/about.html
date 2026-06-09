@@ -1,13 +1,99 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><title>About • Aether</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="/static/css/custom.css">
-</head>
-<body class="bg-[#05070f] text-[#e0e7ff] p-10">
-<div class="max-w-3xl mx-auto">
-<h1 class="text-5xl font-semibold tracking-tighter">The Academy</h1>
-<p class="mt-6 text-xl text-white/70">Aether was built for people who find ordinary language apps uninspiring. Every detail — from the miniature constellation progress to the glass mission cards — exists to make learning feel like the extraordinary journey it is.</p>
-<p class="mt-4">Everything you see is editable in the admin. No code required.</p>
-<a href="/" class="mt-8 inline-block text-[var(--accent-cyan)]">← Return to base</a>
+{% extends "base.html" %}
+
+{% block title %}The Academy — {{ site.site_name|default:"Aether" }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .about-grid { background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 0); background-size: 5px 5px; }
+  .orbit-ring { width: 92px; height: 92px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-6 pt-12 pb-20">
+  <!-- Hero intro -->
+  <div class="max-w-3xl">
+    <div class="section-label">OUR TRAJECTORY</div>
+    <h1 class="text-7xl tracking-[-3.2px] font-semibold leading-none mt-2">The Academy</h1>
+    <p class="mt-6 text-2xl text-white/70 tracking-tight">Aether exists for explorers who find ordinary language platforms uninspiring. We built a miniature cosmos where every detail — the glass mission cards, the living constellation progress, the precise micro-animations — makes fluency feel like the extraordinary journey it truly is.</p>
+  </div>
+
+  <div class="mt-12 grid md:grid-cols-5 gap-4 text-sm">
+    <div class="md:col-span-3 glass rounded-3xl p-8">
+      <div class="uppercase tracking-[3px] text-xs text-white/50 mb-3">THE PHILOSOPHY</div>
+      <div class="text-[17px] leading-tight">Language is not a subject. It is a new coordinate system. We teach you to navigate culture, rhythm, humor and precision the way pilots learn to read the stars — through repeated, beautiful, high-signal practice that rewires how you think.</div>
+    </div>
+    <div class="md:col-span-2 glass rounded-3xl p-8 flex flex-col">
+      <div class="text-xs tracking-[3px] text-white/50 mb-2">OUR PROMISE</div>
+      <div class="flex-1 text-lg">Every pixel, every waypoint, every transmission is intentional. Nothing generic. Nothing ordinary.</div>
+      <div class="text-[var(--accent-cyan)] text-xs tracking-widest mt-6">— LEAD ARCHITECTS</div>
+    </div>
+  </div>
+
+  <!-- The Method -->
+  <div class="mt-20">
+    <div class="section-label mb-2">THE AETHER METHOD</div>
+    <h2 class="text-4xl tracking-tight font-semibold mb-8">Four vectors. One orbit.</h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+      {% for f in features %}
+      <div class="glass rounded-3xl p-7 holo">
+        <div class="mb-5 opacity-70 w-9 h-9">{% include 'partials/_icon.html' with key=f.icon_key only %}</div>
+        <div class="font-semibold tracking-tight text-xl mb-1.5">{{ f.title }}</div>
+        <p class="text-sm text-white/70">{{ f.description }}</p>
+      </div>
+      {% empty %}
+      <div class="text-white/50">Features configured in admin will appear here with their miniature icons.</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- The Crew / Architects -->
+  <div class="mt-20">
+    <div class="section-label">THE ARCHITECTS</div>
+    <h2 class="text-4xl tracking-[-1px] font-semibold mt-1 mb-8">Meet the crew who chart the trajectories.</h2>
+
+    <div class="grid md:grid-cols-3 gap-3">
+      {% for member in crew %}
+      <div class="glass rounded-3xl p-8">
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-full flex-shrink-0" style="background: {{ member.accent_color }}22; box-shadow: 0 0 0 1px {{ member.accent_color }}55 inset;"></div>
+          <div>
+            <div class="font-semibold tracking-tight">{{ member.name }}</div>
+            <div class="text-xs text-white/50">{{ member.role }}</div>
+          </div>
+        </div>
+        {% if member.quote %}
+        <div class="mt-6 italic text-white/80 text-[15px]">“{{ member.quote }}”</div>
+        {% endif %}
+        {% if member.bio %}
+        <div class="mt-4 text-sm text-white/70">{{ member.bio }}</div>
+        {% endif %}
+      </div>
+      {% empty %}
+        <div class="col-span-3 text-white/50 glass p-8 rounded-3xl">Add Crew Members in Admin → Core → Crew. They will appear with their unique accent rings and quotes.</div>
+      {% endfor %}
+    </div>
+    <div class="text-[10px] text-white/40 mt-3 tracking-widest">All instructors are also editable as Teacher Profiles with full curriculum attribution.</div>
+  </div>
+
+  <!-- Languages we fly -->
+  <div class="mt-20">
+    <div class="section-label">LANGUAGES IN THE CONSTELLATION</div>
+    <div class="mt-3 flex flex-wrap gap-2">
+      {% for lang in languages %}
+        <a href="{% url 'catalog:course_list' %}?lang={{ lang.slug }}" class="px-5 py-1.5 text-sm rounded-full border border-white/10 hover:border-white/30 transition flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full" style="background:{{ lang.accent_color }}"></span>
+          {{ lang.name }}
+        </a>
+      {% empty %}
+        <span class="text-white/40">Languages will be listed here once added in admin.</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mt-16">
+    <a href="/" class="text-[var(--accent-cyan)] text-sm tracking-widest hover:underline">← RETURN TO BASE</a>
+  </div>
 </div>
-</body></html>
+{% endblock %}

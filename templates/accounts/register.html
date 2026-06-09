@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Initiate Log — {{ site.site_name|default:"Aether" }}{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto px-6 pt-12 pb-20">
+  <div class="mb-8 text-center">
+    <div class="text-xs tracking-[3.5px] text-white/50">NEW EXPLORER REGISTRATION</div>
+    <h1 class="text-5xl tracking-[-2px] font-semibold mt-2">Begin your journey.</h1>
+    <p class="text-white/60 mt-2 text-sm">Create your personal flight log. All progress, certificates and constellations will be saved here.</p>
+  </div>
+
+  <div class="glass rounded-3xl p-8 md:p-9">
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="text-rose-400 text-sm">{{ form.non_field_errors }}</div>{% endif %}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>{{ form.first_name }}</div>
+        <div>{{ form.last_name }}</div>
+      </div>
+
+      <div>
+        {{ form.email.label_tag|default:"<label class='text-xs tracking-widest text-white/50'>COMMAND EMAIL</label>" }}
+        {{ form.email }}
+        {% if form.email.errors %}<div class="text-xs text-rose-400 mt-1">{{ form.email.errors.0 }}</div>{% endif %}
+      </div>
+
+      <div>
+        {{ form.username.label_tag|default:"<label class='text-xs tracking-widest text-white/50'>CALLSIGN / USERNAME</label>" }}
+        {{ form.username }}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          {{ form.password1.label_tag|default:"<label class='text-xs tracking-widest text-white/50'>PASSCODE</label>" }}
+          {{ form.password1 }}
+        </div>
+        <div>
+          {{ form.password2.label_tag|default:"<label class='text-xs tracking-widest text-white/50'>CONFIRM</label>" }}
+          {{ form.password2 }}
+        </div>
+      </div>
+
+      <button type="submit" class="w-full mt-3 orbit-btn py-[15px] rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold tracking-[2px] text-sm">CREATE LOG &amp; LAUNCH</button>
+    </form>
+
+    <div class="text-center mt-6 text-xs text-white/50">Already have a log? <a href="{% url 'login' %}" class="text-[var(--accent-cyan)]">Sign in →</a></div>
+  </div>
+  <div class="text-center text-[10px] text-white/30 mt-4">By creating an account you agree to chart extraordinary courses.</div>
+</div>
+{% endblock %}

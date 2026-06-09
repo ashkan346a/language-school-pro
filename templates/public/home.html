@@ -6,161 +6,163 @@
 
 {% block extra_head %}
 <style>
-  .starfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-  .mini-icon { width: 28px; height: 28px; }
+  .starfield { position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode: screen; }
+  .constellation-card { transition: transform .3s cubic-bezier(0.23,1,0.32,1), box-shadow .3s, border-color .2s; }
+  .constellation-card:hover { transform: translateY(-6px); box-shadow: 0 30px 70px -20px rgba(0,0,0,.65); border-color: rgba(0,229,255,.3); }
+  .mini-planet { width:22px; height:22px; border-radius:999px; display:inline-block; box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+  .section-label { letter-spacing:4.5px; font-size:10px; font-weight:600; opacity:.5; }
+  .holo-card { position:relative; }
+  .holo-card::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg, rgba(0,229,255,.06), rgba(124,58,237,.04), rgba(255,77,148,.03)); z-index:-1; }
 </style>
 {% endblock %}
 
 {% block content %}
-  <!-- NAV -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 via-violet-500 to-rose-400 flex items-center justify-center">
-          <span class="text-[10px] font-bold tracking-[3px] text-black">A</span>
-        </div>
-        <div>
-          <div class="font-semibold tracking-widest text-lg">{{ site.site_name | upper }}</div>
-          <div class="text-[10px] text-white/50 -mt-1">LANGUAGE INSTITUTE</div>
-        </div>
-      </div>
-      <div class="flex items-center gap-8 text-sm">
-        <a href="#constellation" class="hover:text-[var(--accent-cyan)] transition">The Constellation</a>
-        <a href="{% url 'about' %}" class="hover:text-[var(--accent-cyan)] transition">The Academy</a>
-        <a href="{% url 'pricing' %}" class="hover:text-[var(--accent-cyan)] transition">Manifest</a>
-        <a href="/admin/" class="px-4 py-1.5 rounded-full border border-white/20 hover:bg-white/5 transition">Mission Control</a>
-        <a href="#launch" class="orbit-btn px-5 py-1.5 rounded-full bg-white text-black font-medium text-sm">Begin Your Journey</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO with starfield -->
-  <header class="relative min-h-[100dvh] flex items-center justify-center pt-16">
+  <!-- HERO -->
+  <header class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
     <canvas id="hero-starfield" class="starfield"></canvas>
     <div class="relative z-10 max-w-5xl px-6 text-center">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-xs tracking-[2px] mb-6 border border-white/10">EST. 2026 • EXTRATERRESTRIAL PROGRAM</div>
-      <h1 class="text-7xl md:text-8xl font-semibold tracking-tighter leading-none mb-6">{{ site.hero_title }}</h1>
-      <p class="max-w-2xl mx-auto text-xl text-white/70 mb-10">{{ site.hero_subtitle }}</p>
+      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/5 text-[10px] tracking-[3px] mb-6 border border-white/10">EST 2026 • EXTRATERRESTRIAL PROGRAM</div>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#constellation" class="orbit-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-lg">
+      <h1 class="text-[72px] md:text-[92px] font-semibold tracking-[-4.2px] leading-[.9] mb-6">{{ site.hero_title }}</h1>
+      <p class="max-w-2xl mx-auto text-2xl text-white/70 tracking-tight">{{ site.hero_subtitle }}</p>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#constellation" class="orbit-btn group inline-flex items-center justify-center gap-3 px-9 py-4 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-lg tracking-[-0.2px] active:scale-[0.985] transition">
           {{ site.hero_primary_cta }}
-          <span aria-hidden>→</span>
+          <span class="group-hover:translate-x-0.5 transition">→</span>
         </a>
-        <a href="{% url 'about' %}" class="orbit-btn inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/30 hover:bg-white/5 text-lg">
-          {{ site.hero_secondary_cta }}
-        </a>
+        <a href="{% url 'catalog:course_list' %}" class="orbit-btn inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/25 hover:bg-white/5 text-lg tracking-tight">Browse All Missions</a>
       </div>
-      <div class="mt-12 text-xs tracking-widest opacity-50">SCROLL TO BEGIN YOUR MISSION BRIEFING</div>
+      <div class="mt-16 text-[10px] tracking-[4px] text-white/30">SCROLL TO PLOT YOUR TRAJECTORY</div>
     </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-xs opacity-40">
-      <div>↓</div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/30 text-xs tracking-widest">
+      <div class="mb-1">↓</div>
     </div>
   </header>
 
-  <!-- STATS -->
-  <div class="max-w-6xl mx-auto px-6 -mt-8 relative z-20">
-    <div class="glass rounded-3xl p-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+  <!-- STATS BAR (glass orbital) -->
+  <div class="max-w-6xl mx-auto px-6 -mt-10 relative z-20">
+    <div class="glass rounded-3xl p-8 md:p-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 border border-white/5">
       {% for stat in stats %}
-      <div class="text-center">
-        <div class="text-4xl font-semibold tracking-tighter">{{ stat.value }}</div>
-        <div class="text-sm text-white/60 mt-1">{{ stat.label }}</div>
-      </div>
+        <div class="text-center border-l border-white/10 first:border-l-0 pl-6 first:pl-0">
+          <div class="font-mono text-4xl font-semibold tracking-tighter text-white">{{ stat.value }}</div>
+          <div class="text-xs mt-1.5 text-white/50 tracking-widest">{{ stat.label | upper }}</div>
+        </div>
       {% empty %}
-      <div class="col-span-full text-center text-white/50">Configure stats in the admin → Core → Stats</div>
+        <div class="col-span-full text-center text-white/40 py-2">Configure live stats in Admin → Core → Stats</div>
       {% endfor %}
     </div>
   </div>
 
-  <!-- THE CONSTELLATION (Languages) -->
-  <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-16">
-    <div class="flex items-end justify-between mb-8">
+  <!-- THE CONSTELLATION -->
+  <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-14">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-9">
       <div>
-        <div class="section-header">SECTOR NAVIGATION</div>
-        <h2 class="text-5xl tracking-tighter font-semibold">The Constellation</h2>
+        <div class="section-label">SECTOR NAVIGATION</div>
+        <h2 class="text-6xl tracking-[-2.4px] font-semibold">The Constellation</h2>
       </div>
-      <a href="#" class="text-sm text-[var(--accent-cyan)] hover:underline">View full Star Map →</a>
+      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">View full mission catalog →</a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
       {% for lang in languages %}
-      <a href="#" class="constellation group glass rounded-3xl p-6 flex flex-col hover:border-[var(--accent-cyan)] border border-transparent transition">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="mini-icon rounded-full" style="background: {{ lang.accent_color }}; box-shadow: 0 0 20px {{ lang.accent_color }}40;"></div>
-          <div class="font-medium text-lg">{{ lang.name }}</div>
+      <a href="{% url 'catalog:course_list' %}?lang={{ lang.slug }}" class="constellation-card group glass rounded-3xl p-6 flex flex-col border border-white/5 hover:border-[var(--accent-cyan)]/60">
+        <div class="flex items-center gap-3">
+          <span class="mini-planet" style="background:{{ lang.accent_color }}; box-shadow:0 0 18px {{ lang.accent_color }}55;"></span>
+          <span class="font-medium text-xl tracking-tight">{{ lang.name }}</span>
         </div>
-        <div class="text-sm text-white/60 line-clamp-2 flex-1">{{ lang.short_desc|default:"Precision language trajectories for explorers." }}</div>
-        <div class="mt-6 text-xs text-white/40 group-hover:text-[var(--accent-cyan)] transition">EXPLORE MISSIONS →</div>
+        <div class="mt-4 text-[13px] text-white/60 leading-snug flex-1">{{ lang.short_desc|default:"Precision language vectors for explorers who refuse the ordinary." }}</div>
+        <div class="mt-auto pt-5 text-[10px] tracking-[2px] text-white/40 group-hover:text-[var(--accent-cyan)] transition">PLOT VECTOR →</div>
       </a>
       {% empty %}
-      <div class="col-span-full p-8 glass rounded-3xl text-center">No active languages yet. Add some in the admin (Core → Languages).</div>
+      <div class="col-span-full p-8 glass rounded-3xl text-center text-white/50">No active languages configured. Add Languages in the admin (Core section).</div>
       {% endfor %}
     </div>
   </section>
 
-  <!-- FEATURES -->
+  <!-- WHY AETHER / FEATURES -->
   <section class="bg-[#0a0c1a] py-16 border-y border-white/10">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="section-header mb-3">WHY AETHER</div>
-      <h3 class="text-4xl tracking-tight font-semibold mb-10">Designed for those who refuse ordinary orbits.</h3>
+      <div class="section-label mb-2">THE AETHER METHOD</div>
+      <h3 class="text-5xl tracking-[-1.6px] font-semibold leading-none mb-10">Designed for those who<br>refuse ordinary orbits.</h3>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
         {% for f in features %}
-        <div class="glass rounded-3xl p-7 holo">
-          <div class="w-9 h-9 mb-5 opacity-80">{% include 'partials/_icon.html' with key=f.icon_key only %}</div>
-          <div class="font-semibold text-2xl tracking-tight mb-2">{{ f.title }}</div>
-          <p class="text-white/70 text-[15px] leading-relaxed">{{ f.description }}</p>
+        <div class="glass holo-card rounded-3xl p-7">
+          <div class="w-8 h-8 mb-6 opacity-80">{% include 'partials/_icon.html' with key=f.icon_key only %}</div>
+          <div class="font-semibold text-2xl tracking-[-0.6px] mb-2.5">{{ f.title }}</div>
+          <p class="text-[14px] text-white/70 leading-relaxed">{{ f.description }}</p>
         </div>
         {% empty %}
-        <div class="col-span-full text-white/50">Add Features in the admin panel.</div>
+          <div class="col-span-full text-white/50">Add Features through the admin. Each uses a unique miniature icon.</div>
         {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS / CREW LOGS -->
+  <!-- CREW LOGS -->
   <section class="max-w-6xl mx-auto px-6 py-20">
-    <div class="section-header mb-3">CREW LOGS</div>
-    <h3 class="text-4xl tracking-tight font-semibold mb-10">Real explorers. Real trajectories.</h3>
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <div class="section-label">TRANSMISSIONS FROM THE CREW</div>
+        <h3 class="text-5xl tracking-[-1.8px] font-semibold">Real explorers. Real vectors.</h3>
+      </div>
+    </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
       {% for t in testimonials %}
-      <div class="glass rounded-3xl p-7">
-        <div class="flex gap-1 text-[var(--accent-cyan)] mb-4">{% for i in "12345"|make_list %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
-        <blockquote class="text-lg leading-tight">“{{ t.quote }}”</blockquote>
-        <div class="mt-6 text-sm">
+      <div class="glass rounded-3xl p-8">
+        <div class="flex gap-px text-[var(--accent-cyan)] mb-5 text-lg">{% for i in "12345"|make_list %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+        <blockquote class="text-[17px] leading-tight tracking-[-0.1px]">“{{ t.quote }}”</blockquote>
+        <div class="mt-8 text-sm">
           <div class="font-medium">{{ t.name }}</div>
           <div class="text-white/50">{{ t.role }}</div>
         </div>
       </div>
       {% empty %}
-      <div class="col-span-full text-white/50">Seed some Testimonials in admin → Core.</div>
+      <div class="col-span-full text-white/40">Seed Testimonials in Admin → Core → Testimonials to populate this log.</div>
       {% endfor %}
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section id="launch" class="max-w-4xl mx-auto px-6 pb-24 text-center">
-    <div class="glass rounded-3xl px-10 py-14">
-      <div class="text-[var(--accent-cyan)] text-sm tracking-[3px] mb-3">THE HORIZON AWAITS</div>
-      <h3 class="text-5xl tracking-tighter font-semibold">Ready to chart a new course?</h3>
-      <p class="mt-3 text-white/70">Join the next cohort of language explorers. Fully configurable. Unforgettable design.</p>
-      <a href="/admin/" class="mt-8 inline-block orbit-btn px-10 py-4 rounded-2xl bg-white text-black font-semibold">Enter the Admin to Configure Everything</a>
-      <div class="mt-3 text-xs text-white/40">Everything on this page is editable live from the Django admin.</div>
+  <!-- FAQ (simple elegant list, Alpine removed for broad py compat) -->
+  <section class="max-w-4xl mx-auto px-6 pb-20">
+    <div class="section-label mb-3">FREQUENTLY ASKED TRAJECTORY QUESTIONS</div>
+    <h3 class="text-4xl tracking-tight font-semibold mb-8">Everything you need to know before launch.</h3>
+
+    <div class="divide-y divide-white/10 border-y border-white/10">
+      {% for faq in faqs %}
+      <div class="py-5">
+        <div class="text-lg">{{ faq.question }}</div>
+        <div class="pt-2 text-white/70 text-[15px] pr-8">{{ faq.answer }}</div>
+      </div>
+      {% empty %}
+        <div class="py-6 text-white/50">Add FAQs in the admin for this elegant list to appear.</div>
+      {% endfor %}
     </div>
   </section>
 
-  <footer class="border-t border-white/10 py-8 text-xs text-white/40 text-center">
-    © {{ site.site_name }} Language Institute — Built with precision for extraordinary students.
-  </footer>
+  <!-- FINAL HORIZON CTA -->
+  <section id="launch" class="max-w-4xl mx-auto px-6 pb-24">
+    <div class="glass rounded-3xl px-10 py-14 text-center border border-white/10">
+      <div class="text-[var(--accent-cyan)] tracking-[3.5px] text-xs mb-2">THE HORIZON AWAITS</div>
+      <h3 class="text-6xl tracking-[-2px] font-semibold">Ready to chart a new course?</h3>
+      <p class="mt-3 max-w-md mx-auto text-white/70">Join the next cohort of language explorers. Every element on this platform is live-editable from Mission Control.</p>
+
+      <div class="mt-8 flex justify-center gap-3">
+        <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">EXPLORE MISSIONS</a>
+        <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">CREATE YOUR LOG</a>
+      </div>
+      <div class="mt-4 text-[10px] text-white/40 tracking-widest">FULLY CONFIGURABLE • NO CODE REQUIRED</div>
+    </div>
+  </section>
 
   <script src="/static/js/starfield.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const canvas = document.getElementById('hero-starfield');
-      if (canvas && window.AetherStarfield) {
-        new AetherStarfield(canvas, { count: 220, speed: 0.12, color: '#00e5ff' });
-      }
+      const c = document.getElementById('hero-starfield');
+      if (c && window.AetherStarfield) new AetherStarfield(c, {count: 260, speed: .09, color: '#00e5ff'});
     });
   </script>
 {% endblock %}
