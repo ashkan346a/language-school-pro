@@ -38,7 +38,7 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
       {% for f in features %}
       <div class="glass rounded-3xl p-7 holo">
-        <div class="mb-5 opacity-70 w-9 h-9">{% include 'partials/_icon.html' with key=f.icon_key only %}</div>
+        <div class="mb-5 opacity-70 w-9 h-9" style="color:#00e5ff">{{ f.icon_html|safe }}</div>
         <div class="font-semibold tracking-tight text-xl mb-1.5">{{ f.title }}</div>
         <p class="text-sm text-white/70">{{ f.description }}</p>
       </div>

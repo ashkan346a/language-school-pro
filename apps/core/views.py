@@ -66,6 +66,16 @@ def home(request):
     """Stunning public landing page. Resilient on first deploy."""
     site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
 
+    # Pre-compute simple stars to avoid complex nested template filters that can stress Context copying on some Python versions
+    for t in testimonials:
+        t.stars = ''.join('★' if i < (t.rating or 5) else '☆' for i in range(5))
+
+    # For features, provide a very simple icon placeholder (colored dot) to avoid {% include with only %} deep context copies
+    # that have triggered template rendering issues in the current runtime during extends/block.
+    for f in features:
+        color = '#00e5ff'
+        f.icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+
     context = {
         'site': site,
         'languages': languages,
@@ -81,6 +91,11 @@ def home(request):
 
 def about(request):
     site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
+
+    for f in features:
+        color = '#00e5ff'
+        f.icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+
     return render(request, 'public/about.html', {
         'site': site,
         'crew': crew,
