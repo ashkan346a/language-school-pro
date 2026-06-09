@@ -227,10 +227,12 @@
     document.addEventListener('DOMContentLoaded', () => {
       const c = document.getElementById('hero-starfield');
       if (c && window.AetherStarfield) {
-        new AetherStarfield(c, {count: 220, speed: 0.028, color: '#c0c0d0'});
+        try {
+          new AetherStarfield(c, {count: 240, speed: 0.025, color: '#d1d5db'});
+        } catch(e) { /* graceful - CSS background still provides premium depth */ }
       }
 
-      // Gentle entrance animation for sections
+      // Gentle entrance animation for sections (CSS only, reliable)
       const sections = document.querySelectorAll('section');
       sections.forEach((sec, i) => {
         sec.style.opacity = '0';
