@@ -30,6 +30,11 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('pricing/', pricing, name='pricing'),
 
+    # Temporary redirects so LOGIN_URL / dashboard references don't 404 or reverse-crash
+    # (full custom auth + dashboard pages are planned for next iteration)
+    path('login/', RedirectView.as_view(url='/admin/login/', permanent=False), name='login'),
+    path('dashboard/', RedirectView.as_view(url='/admin/', permanent=False), name='dashboard'),
+
     # TODO (next phases): courses, auth, dashboard, learning, enrollment, certificates
     # path('courses/', include('apps.catalog.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),

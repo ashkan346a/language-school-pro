@@ -105,4 +105,42 @@ Built with love for explorers who deserve better than ordinary platforms.
 
 ---
 
-**Status**: Core foundation complete, stunning public landing + admin fully wired + rich seed data + Railway artifacts. Ready for you to connect to Railway and continue iterating.
+## Railway Deployment (language-school-pro-production.up.railway.app)
+
+The project is configured for zero-config-ish deploys via GitHub + Railway (Railpack builder).
+
+### Required / Recommended Environment Variables (set in Railway dashboard → Variables)
+
+- `SECRET_KEY` — **Required in production**. 
+  If you forget it, the app will crash on start with a **ValueError that automatically generates a secure key for you**. 
+  Just copy the printed value from the deploy logs and paste it as the `SECRET_KEY` variable, then redeploy. (Implemented in `config/settings.py`.)
+
+- `DEBUG=False` (recommended; defaults to False now)
+
+- `ALLOWED_HOSTS` — already includes your production domain + `*.railway.app` by default.
+
+- For **persistent database** (strongly recommended): Add the **Postgres** plugin in Railway. It automatically injects `DATABASE_URL`. Our settings will switch to Postgres + `dj-database-url` automatically. SQLite is used as fallback but the DB file is ephemeral on Railway deploys unless you also add a volume.
+
+Other vars (Stripe keys etc.) are optional for now.
+
+### Build fixes applied
+- `runtime.txt`: `python-3.12` (avoids pinning old patch versions)
+- `mise.toml`: Disables GitHub attestations for Python (the exact error you saw with 3.12.4)
+- `Procfile`: Explicit `--bind 0.0.0.0:$PORT`
+- Production security middleware + cookie settings enabled when `DEBUG=False`
+
+After setting the variables (especially the auto-generated SECRET_KEY from logs if needed), trigger a deploy. The home page at your domain should come online with the cosmic Aether design. Visit `/admin/` to configure content or run `python manage.py seed_aether` once via Railway Shell/Run for demo data.
+
+### One-time setup after first successful deploy
+```bash
+# In Railway "Run" or Shell for the service
+python manage.py migrate
+python manage.py seed_aether          # optional demo data
+python manage.py createsuperuser      # or use the one from seed if you ran it
+```
+
+Then log in at `/admin/`.
+
+---
+
+**Status**: Build issues fixed, changes committed & pushed. Auto secret key generation implemented. Site should now build and run on Railway. Send any new runtime/deploy logs if you hit further errors (e.g. after the build succeeds).
