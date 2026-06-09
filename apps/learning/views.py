@@ -14,26 +14,35 @@ from apps.core.views import _get_site_data
 @login_required
 def dashboard(request):
     """Student Mission Control: list of active/completed trajectories with beautiful orbital progress."""
-    enrollments = (
-        Enrollment.objects.filter(student=request.user)
-        .select_related('course__language', 'course__instructor__user')
-        .prefetch_related('course__modules__lessons')
-        .order_by('-enrolled_at')
-    )
+    try:
+        enrollments = (
+            Enrollment.objects.filter(student=request.user)
+            .select_related('course__language', 'course__instructor__user')
+            .prefetch_related('course__modules__lessons')
+            .order_by('-enrolled_at')
+        )
 
-    # Annotate simple progress for each (recalc if needed) - use public attr names (Django templates forbid leading _ )
-    for enr in enrollments:
-        enr.recalculate_progress()  # ensures up to date
-        # total lessons
-        enr.computed_total_lessons = sum(m.lessons.count() for m in enr.course.modules.all()) or 1
-        enr.computed_completed = LessonProgress.objects.filter(enrollment=enr, is_completed=True).count()
+        for enr in enrollments:
+            try:
+                enr.recalculate_progress()
+            except Exception:
+                pass
+            try:
+                enr.computed_total_lessons = sum(m.lessons.count() for m in enr.course.modules.all()) or 1
+                enr.computed_completed = LessonProgress.objects.filter(enrollment=enr, is_completed=True).count()
+            except Exception:
+                enr.computed_total_lessons = 1
+                enr.computed_completed = 0
 
-    site, *_ = _get_site_data()
-    context = {
-        'site': site,
-        'enrollments': enrollments,
-    }
-    return render(request, 'public/dashboard.html', context)
+        site, *_ = _get_site_data()
+        context = {
+            'site': site,
+            'enrollments': enrollments,
+        }
+        return render(request, 'public/dashboard.html', context)
+    except Exception:
+        site, *_ = _get_site_data()
+        return render(request, 'public/home.html', {'site': site, 'message': 'داشبورد شما موقتاً در دسترس نیست. لطفاً بعداً تلاش کنید.'})
 
 
 @login_required
@@ -41,49 +50,54 @@ def learn(request, enrollment_id, lesson_id=None):
     """Immersive learning view: sidebar mission log + main transmission viewer.
     Beautiful, focused, non-generic.
     """
-    enrollment = get_object_or_404(
-        Enrollment.objects.select_related('course__language', 'course__instructor__user'),
-        pk=enrollment_id, student=request.user
-    )
+    try:
+        enrollment = get_object_or_404(
+            Enrollment.objects.select_related('course__language', 'course__instructor__user'),
+            pk=enrollment_id, student=request.user
+        )
 
-    modules = enrollment.course.modules.prefetch_related('lessons').order_by('order')
+        modules = enrollment.course.modules.prefetch_related('lessons').order_by('order')
 
-    # Determine current lesson
-    current_lesson = None
-    if lesson_id:
-        current_lesson = get_object_or_404(Lesson, pk=lesson_id, module__course=enrollment.course)
+        current_lesson = None
+        if lesson_id:
+            try:
+                current_lesson = Lesson.objects.get(pk=lesson_id, module__course=enrollment.course)
+            except Lesson.DoesNotExist:
+                pass
 
-    if not current_lesson:
-        # pick first preview or first lesson
-        for m in modules:
-            for les in m.lessons.order_by('order'):
-                current_lesson = les
-                break
-            if current_lesson:
-                break
+        if not current_lesson:
+            for m in modules:
+                for les in m.lessons.order_by('order'):
+                    current_lesson = les
+                    break
+                if current_lesson:
+                    break
 
-    # Progress map
-    progress = {
-        lp.lesson_id: lp for lp in LessonProgress.objects.filter(enrollment=enrollment)
-    }
+        progress = {}
+        try:
+            progress = {lp.lesson_id: lp for lp in LessonProgress.objects.filter(enrollment=enrollment)}
+        except Exception:
+            pass
 
-    # Compute overall
-    total_lessons = sum(m.lessons.count() for m in modules)
-    done = sum(1 for lp in progress.values() if lp.is_completed)
-    percent = int((done / max(total_lessons, 1)) * 100) if total_lessons else 0
-    site, *_ = _get_site_data()
+        total_lessons = sum(m.lessons.count() for m in modules) if modules else 0
+        done = sum(1 for lp in progress.values() if lp.is_completed)
+        percent = int((done / max(total_lessons, 1)) * 100) if total_lessons else 0
+        site, *_ = _get_site_data()
 
-    context = {
-        'site': site,
-        'enrollment': enrollment,
-        'modules': modules,
-        'current_lesson': current_lesson,
-        'progress': progress,
-        'percent': percent,
-        'total_lessons': total_lessons,
-        'done_lessons': done,
-    }
-    return render(request, 'public/learn.html', context)
+        context = {
+            'site': site,
+            'enrollment': enrollment,
+            'modules': modules,
+            'current_lesson': current_lesson,
+            'progress': progress,
+            'percent': percent,
+            'total_lessons': total_lessons,
+            'done_lessons': done,
+        }
+        return render(request, 'public/learn.html', context)
+    except Exception:
+        site, *_ = _get_site_data()
+        return render(request, 'public/home.html', {'site': site})
 
 
 @login_required
@@ -112,10 +126,10 @@ def mark_lesson_complete(request, lesson_id):
     lp, _ = LessonProgress.objects.get_or_create(enrollment=enrollment, lesson=lesson)
     lp.mark_complete()
 
-    # Nice success fragment for HTMX outerHTML swap
+    # Nice success fragment for HTMX outerHTML swap (Persian)
     return HttpResponse(
         '<span class="inline-flex items-center gap-1.5 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/5">'
-        '<span class="font-medium">WAYPOINT REACHED</span>'
+        '<span class="font-medium">ایستگاه تکمیل شد</span>'
         '</span>',
         content_type='text/html'
     )
