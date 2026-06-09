@@ -75,24 +75,29 @@
             {% endif %}
           </div>
 
-          <!-- Complete action - premium transmit feel -->
+          <!-- Complete action - premium transmit feel (robust HTMX + CSRF) -->
           <div class="mt-10 flex items-center gap-4">
-            {% if progress|get_item:current_lesson.id and progress|get_item:current_lesson.id.is_completed %}
+            {% with lp=progress|get_item:current_lesson.id %}
+            {% if lp and lp.is_completed %}
               <div class="px-5 py-2 rounded-2xl border border-emerald-400/30 text-emerald-400 text-sm flex items-center gap-2">
                 WAYPOINT REACHED
-                <span class="text-xs">— {{ progress|get_item:current_lesson.id.completed_at|date:"M d, H:i" }}</span>
+                <span class="text-xs">— {{ lp.completed_at|date:"M d, H:i" }}</span>
               </div>
             {% else %}
-              <button 
-                hx-post="{% url 'learning:mark_complete' current_lesson.id %}"
-                hx-swap="outerHTML"
-                hx-confirm="Mark this transmission complete and advance your orbit?"
-                class="orbit-btn group px-8 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1.5px] flex items-center gap-2 active:scale-[0.985] transition">
-                <span>TRANSMIT WAYPOINT</span>
-                <span class="group-active:translate-x-0.5 transition">↑</span>
-              </button>
+              <form hx-post="{% url 'learning:mark_complete' current_lesson.id %}" 
+                    hx-swap="outerHTML"
+                    hx-confirm="Mark this transmission complete and advance your orbit?"
+                    class="inline">
+                {% csrf_token %}
+                <button type="submit"
+                        class="orbit-btn group px-8 py-3 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-sm tracking-[1.5px] flex items-center gap-2 active:scale-[0.985] transition">
+                  <span>TRANSMIT WAYPOINT</span>
+                  <span class="group-active:translate-x-0.5 transition">↑</span>
+                </button>
+              </form>
               <div class="text-xs text-white/40 max-w-[180px]">This updates your personal constellation and mission log instantly.</div>
             {% endif %}
+            {% endwith %}
           </div>
         </div>
       {% else %}

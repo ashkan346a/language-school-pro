@@ -84,15 +84,19 @@ def course_detail(request, slug):
 
 @login_required
 def enroll(request, slug):
-    """Simple enroll action. Creates active enrollment (or re-activates). In real would go through payments."""
-    course = get_object_or_404(Course, slug=slug, is_published=True)
+    """Simple enroll action. Creates active enrollment (or re-activates). Defensive to avoid 500s."""
+    try:
+        course = Course.objects.get(slug=slug, is_published=True)
+    except Course.DoesNotExist:
+        messages.error(request, "Mission not found or no longer available.")
+        return redirect('catalog:course_list')
 
     enrollment, created = Enrollment.objects.get_or_create(
         student=request.user,
         course=course,
         defaults={'status': 'active'}
     )
-    if not created and enrollment.status != 'active':
+    if not created and enrollment.status not in ('active', 'completed'):
         enrollment.status = 'active'
         enrollment.save(update_fields=['status'])
 

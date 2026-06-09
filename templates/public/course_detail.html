@@ -122,11 +122,13 @@
 
                 <div>
                   {% if enrollment %}
-                    {% if progress_map|get_item:lesson.id and progress_map|get_item:lesson.id.is_completed %}
+                    {% with lp=progress_map|get_item:lesson.id %}
+                    {% if lp and lp.is_completed %}
                       <span class="text-emerald-400 text-xs tracking-widest">WAYPOINT REACHED</span>
                     {% else %}
                       <a href="{% url 'learning:learn_lesson' enrollment.id lesson.id %}" class="text-xs px-3 py-1 rounded border border-white/10 hover:bg-white/5 group-hover:border-[var(--accent-cyan)]/40">TRANSMIT</a>
                     {% endif %}
+                    {% endwith %}
                   {% else %}
                     <span class="text-white/30 text-xs">ENROLL TO UNLOCK</span>
                   {% endif %}

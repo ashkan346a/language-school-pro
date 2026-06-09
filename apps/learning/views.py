@@ -90,22 +90,32 @@ def learn(request, enrollment_id, lesson_id=None):
 @require_POST
 def mark_lesson_complete(request, lesson_id):
     """HTMX endpoint: mark a lesson complete for current user's enrollment on that course.
-    Returns a small HTML fragment for swap.
+    Returns a small HTML fragment for swap. Very defensive to avoid 500s.
     """
-    lesson = get_object_or_404(Lesson, pk=lesson_id)
-
-    # Find the enrollment for this user + course
     try:
-        enrollment = Enrollment.objects.get(student=request.user, course=lesson.module.course)
+        lesson = Lesson.objects.get(pk=lesson_id)
+    except Lesson.DoesNotExist:
+        return HttpResponse(
+            '<span class="text-xs text-red-400">Transmission not found.</span>',
+            status=404, content_type='text/html'
+        )
+
+    # Find the enrollment for this user + course (defensive)
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=lesson.module.course, status__in=['active', 'completed'])
     except Enrollment.DoesNotExist:
-        return HttpResponse("No active enrollment for this mission.", status=400)
+        return HttpResponse(
+            '<span class="text-xs text-amber-400">No active mission for this transmission.</span>',
+            status=400, content_type='text/html'
+        )
 
     lp, _ = LessonProgress.objects.get_or_create(enrollment=enrollment, lesson=lesson)
     lp.mark_complete()
 
-    # Return a success badge fragment (htmx will swap)
+    # Nice success fragment for HTMX outerHTML swap
     return HttpResponse(
-        f'<span class="inline-flex items-center gap-1 text-emerald-400 text-xs px-2 py-0.5 rounded border border-emerald-400/30">'
-        f'<span>WAYPOINT REACHED</span></span>',
+        '<span class="inline-flex items-center gap-1.5 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/5">'
+        '<span class="font-medium">WAYPOINT REACHED</span>'
+        '</span>',
         content_type='text/html'
     )
