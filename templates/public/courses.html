@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-6 pt-10 pb-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-16 sm:pb-20">
   <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-y-4 mb-9">
     <div>
       <div class="section-label">دوره‌های زبان</div>
@@ -22,7 +22,7 @@
   </div>
 
   <!-- Filters -->
-  <div class="flex flex-wrap items-center gap-2 mb-6" x-data>
+  <div class="flex flex-wrap items-center gap-2 mb-6 text-sm" x-data>
     <a href="{% url 'catalog:course_list' %}" class="px-4 py-1.5 text-xs rounded-full border border-white/15 hover:bg-white/5 {% if not active_lang and not q %}filter-active{% endif %}">همه زبان‌ها</a>
     {% for lang in languages %}
       <a href="?lang={{ lang.slug }}{% if q %}&q={{ q }}{% endif %}" 

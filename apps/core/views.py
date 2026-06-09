@@ -49,10 +49,10 @@ def _get_site_data():
 
     # Beautiful default stats (Persian, realistic, no admin text)
     default_stats = [
-        {"value": "۳۸۰۰+", "label": "دانشجوی فعال"},
-        {"value": "۹۲٪", "label": "نرخ رضایت"},
-        {"value": "۴۷", "label": "دوره تخصصی"},
-        {"value": "۸۵۰", "label": "گواهی صادرشده"},
+        {"value": "3800+", "label": "دانشجوی فعال"},
+        {"value": "92٪", "label": "نرخ رضایت"},
+        {"value": "47", "label": "دوره تخصصی"},
+        {"value": "850", "label": "گواهی صادرشده"},
     ]
     try:
         stats = list(Stat.objects.filter(is_active=True)[:6])

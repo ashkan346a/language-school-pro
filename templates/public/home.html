@@ -40,12 +40,15 @@
 {% endblock %}
 
 {% block content %}
-  <!-- HERO: Clean, premium, fully Persian, high-end modern look (no weird split) -->
+  <!-- HERO: Clean, premium, fully Persian, high-end modern look. Animation properly placed as subtle background. -->
   <header class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden hero-clean">
-    <!-- Subtle elegant starfield across the whole hero -->
-    <canvas id="hero-starfield" class="starfield" style="opacity:0.6;"></canvas>
+    <!-- Subtle elegant starfield as background - properly layered behind content with overlay for readability -->
+    <canvas id="hero-starfield" class="starfield" style="opacity:0.45; z-index:1;"></canvas>
+    
+    <!-- Subtle dark gradient overlay to ensure text contrast and proper design integration -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#05070f]/60 via-[#05070f]/40 to-[#05070f]/70 z-[2]"></div>
 
-    <div class="relative z-10 max-w-[820px] px-6 text-center">
+    <div class="relative z-10 max-w-[820px] px-4 sm:px-6 text-center">
       <div class="inline-flex items-center px-4 py-1 rounded-full border border-white/15 text-xs tracking-[2px] text-white/60 mb-8">
         تأسیس ۱۴۰۵ • آموزش ممتاز زبان
       </div>
@@ -76,9 +79,9 @@
     </div>
   </header>
 
-  <!-- STATS BAR (glass orbital) -->
-  <div class="max-w-6xl mx-auto px-6 -mt-10 relative z-20">
-    <div class="glass rounded-3xl p-8 md:p-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 border border-white/5">
+  <!-- STATS BAR (glass orbital) - improved responsive, no bad overlap with hero animation -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 -mt-8 sm:-mt-10 relative z-20">
+    <div class="glass rounded-3xl p-6 sm:p-8 md:p-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-6 sm:gap-y-8 border border-white/5">
       {% for stat in stats %}
         <div class="text-center border-r border-white/10 last:border-r-0 pr-6 last:pr-0 reveal">
           <div class="stat-value font-mono text-4xl font-semibold tracking-tighter text-white" data-target="{{ stat.value|cut:'+'|cut:'٪'|cut:'k' }}">{{ stat.value }}</div>
@@ -96,23 +99,23 @@
       <div class="section-label">روند یادگیری</div>
       <h3 class="text-4xl tracking-tight font-semibold">در ۴ گام ساده به تسلط برسید</h3>
     </div>
-    <div class="grid md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       <div class="glass card-3d rounded-3xl p-7 text-center reveal">
         <div class="mx-auto mb-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--accent-cyan)] text-xl font-mono">۱</div>
         <div class="font-semibold text-lg mb-2">سطح‌یابی دقیق</div>
         <p class="text-sm text-white/70">با یک ارزیابی کوتاه، سطح واقعی شما (A1 تا C2) مشخص می‌شود.</p>
       </div>
-      <div class="glass rounded-3xl p-7 text-center">
+      <div class="glass card-3d rounded-3xl p-7 text-center reveal">
         <div class="mx-auto mb-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--accent-cyan)] text-xl font-mono">۲</div>
         <div class="font-semibold text-lg mb-2">انتخاب مسیر مناسب</div>
         <p class="text-sm text-white/70">دوره خودگام یا گروهی زنده را بر اساس برنامه و هدف‌تان انتخاب کنید.</p>
       </div>
-      <div class="glass rounded-3xl p-7 text-center">
+      <div class="glass card-3d rounded-3xl p-7 text-center reveal">
         <div class="mx-auto mb-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--accent-cyan)] text-xl font-mono">۳</div>
         <div class="font-semibold text-lg mb-2">تمرین و بازخورد مداوم</div>
         <p class="text-sm text-white/70">جلسات زنده، تمرین‌های تعاملی و بازخورد شخصی از اساتید بومی.</p>
       </div>
-      <div class="glass rounded-3xl p-7 text-center">
+      <div class="glass card-3d rounded-3xl p-7 text-center reveal">
         <div class="mx-auto mb-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--accent-cyan)] text-xl font-mono">۴</div>
         <div class="font-semibold text-lg mb-2">گواهی و پیشرفت واقعی</div>
         <p class="text-sm text-white/70">در پایان هر سطح گواهی معتبر دریافت کنید و مهارت‌های خود را به کار بگیرید.</p>

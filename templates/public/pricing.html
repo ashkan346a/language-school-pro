@@ -3,7 +3,7 @@
 {% block title %}مانیفست — {{ site.site_name|default:"اتر" }}{% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-6 pt-12 pb-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-12 pb-14 sm:pb-16">
   <div class="max-w-2xl">
     <div class="section-label">مانیفست ماموریت</div>
     <h1 class="text-6xl tracking-[-2.6px] font-semibold mt-2">مسیر خود را انتخاب کنید.</h1>
@@ -11,7 +11,7 @@
   </div>
 
   <!-- Pricing Tiers -->
-  <div class="mt-12 grid md:grid-cols-3 gap-4">
+  <div class="mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
     {% for tier in pricing_tiers %}
       <div class="glass rounded-3xl p-8 flex flex-col {% if tier.is_featured %}border border-[var(--accent-cyan)]/60 ring-1 ring-[var(--accent-cyan)]/10{% endif %}">
         <div>
