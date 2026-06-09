@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site.site_name|default:"Aether" }} — Languages that propel you{% endblock %}</title>
+  <meta name="description" content="{% block meta_desc %}{{ site.meta_description|default:'Premium extraterrestrial language learning platform.' }}{% endblock %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js" defer></script>
+  {% block extra_head %}{% endblock %}
+  <style>
+    :root { --accent-cyan: #00e5ff; --accent-violet:#7c3aed; --accent-rose:#ff4d94; }
+  </style>
+</head>
+<body class="bg-[#05070f] text-[#e0e7ff] min-h-screen">
+  <nav class="fixed top-0 inset-x-0 z-50 glass border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between text-sm">
+      <a href="{% url 'home' %}" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--accent-cyan)] via-[var(--accent-violet)] to-[var(--accent-rose)] flex items-center justify-center">
+          <span class="text-black text-[10px] font-bold tracking-[3px]">A</span>
+        </div>
+        <div class="font-semibold tracking-[2px] text-lg group-hover:text-[var(--accent-cyan)] transition">AETHER</div>
+      </a>
+
+      <div class="flex items-center gap-7">
+        <a href="{% url 'home' %}#constellation" class="hover:text-[var(--accent-cyan)] transition">Star Map</a>
+        <a href="{% url 'about' %}" class="hover:text-[var(--accent-cyan)] transition">The Academy</a>
+        <a href="{% url 'pricing' %}" class="hover:text-[var(--accent-cyan)] transition">Manifest</a>
+        <a href="/admin/" class="px-4 py-1 rounded-full border border-white/20 hover:bg-white/5">Admin</a>
+        <a href="{% url 'home' %}" class="orbit-btn px-5 py-1.5 rounded-full bg-white/95 text-black font-medium text-xs tracking-wider">LAUNCH</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-16">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="mt-20 border-t border-white/10 py-8 text-center text-xs text-white/40">
+    © Aether Language Institute — A miniature space for extraordinary fluency.
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

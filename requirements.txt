@@ -1,0 +1,16 @@
+# Aether — Production-grade language learning platform
+Django>=5.1,<5.2
+python-decouple>=3.8
+Pillow>=10.0
+whitenoise>=6.6
+gunicorn>=21.2
+stripe>=10.0
+reportlab>=4.0
+markdown>=3.5
+bleach>=6.0
+python-slugify>=8.0
+dj-database-url>=2.1
+
+# Optional but recommended for future
+# django-unfold  # for beautiful modern admin (can enable later)
+# WeasyPrint  # alternative PDF if preferred over reportlab (more deps)

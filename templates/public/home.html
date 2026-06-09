@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ site.site_name }} — {{ site.tagline }}{% endblock %}
+{% block meta_desc %}{{ site.meta_description }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .starfield { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .mini-icon { width: 28px; height: 28px; }
+</style>
+{% endblock %}
+
+{% block content %}
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 via-violet-500 to-rose-400 flex items-center justify-center">
+          <span class="text-[10px] font-bold tracking-[3px] text-black">A</span>
+        </div>
+        <div>
+          <div class="font-semibold tracking-widest text-lg">{{ site.site_name | upper }}</div>
+          <div class="text-[10px] text-white/50 -mt-1">LANGUAGE INSTITUTE</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-8 text-sm">
+        <a href="#constellation" class="hover:text-[var(--accent-cyan)] transition">The Constellation</a>
+        <a href="{% url 'about' %}" class="hover:text-[var(--accent-cyan)] transition">The Academy</a>
+        <a href="{% url 'pricing' %}" class="hover:text-[var(--accent-cyan)] transition">Manifest</a>
+        <a href="/admin/" class="px-4 py-1.5 rounded-full border border-white/20 hover:bg-white/5 transition">Mission Control</a>
+        <a href="#launch" class="orbit-btn px-5 py-1.5 rounded-full bg-white text-black font-medium text-sm">Begin Your Journey</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO with starfield -->
+  <header class="relative min-h-[100dvh] flex items-center justify-center pt-16">
+    <canvas id="hero-starfield" class="starfield"></canvas>
+    <div class="relative z-10 max-w-5xl px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-xs tracking-[2px] mb-6 border border-white/10">EST. 2026 • EXTRATERRESTRIAL PROGRAM</div>
+      <h1 class="text-7xl md:text-8xl font-semibold tracking-tighter leading-none mb-6">{{ site.hero_title }}</h1>
+      <p class="max-w-2xl mx-auto text-xl text-white/70 mb-10">{{ site.hero_subtitle }}</p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#constellation" class="orbit-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[var(--accent-cyan)] text-black font-semibold text-lg">
+          {{ site.hero_primary_cta }}
+          <span aria-hidden>→</span>
+        </a>
+        <a href="{% url 'about' %}" class="orbit-btn inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-white/30 hover:bg-white/5 text-lg">
+          {{ site.hero_secondary_cta }}
+        </a>
+      </div>
+      <div class="mt-12 text-xs tracking-widest opacity-50">SCROLL TO BEGIN YOUR MISSION BRIEFING</div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-xs opacity-40">
+      <div>↓</div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="max-w-6xl mx-auto px-6 -mt-8 relative z-20">
+    <div class="glass rounded-3xl p-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      {% for stat in stats %}
+      <div class="text-center">
+        <div class="text-4xl font-semibold tracking-tighter">{{ stat.value }}</div>
+        <div class="text-sm text-white/60 mt-1">{{ stat.label }}</div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center text-white/50">Configure stats in the admin → Core → Stats</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- THE CONSTELLATION (Languages) -->
+  <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-16">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <div class="section-header">SECTOR NAVIGATION</div>
+        <h2 class="text-5xl tracking-tighter font-semibold">The Constellation</h2>
+      </div>
+      <a href="#" class="text-sm text-[var(--accent-cyan)] hover:underline">View full Star Map →</a>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+      {% for lang in languages %}
+      <a href="#" class="constellation group glass rounded-3xl p-6 flex flex-col hover:border-[var(--accent-cyan)] border border-transparent transition">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="mini-icon rounded-full" style="background: {{ lang.accent_color }}; box-shadow: 0 0 20px {{ lang.accent_color }}40;"></div>
+          <div class="font-medium text-lg">{{ lang.name }}</div>
+        </div>
+        <div class="text-sm text-white/60 line-clamp-2 flex-1">{{ lang.short_desc|default:"Precision language trajectories for explorers." }}</div>
+        <div class="mt-6 text-xs text-white/40 group-hover:text-[var(--accent-cyan)] transition">EXPLORE MISSIONS →</div>
+      </a>
+      {% empty %}
+      <div class="col-span-full p-8 glass rounded-3xl text-center">No active languages yet. Add some in the admin (Core → Languages).</div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="bg-[#0a0c1a] py-16 border-y border-white/10">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="section-header mb-3">WHY AETHER</div>
+      <h3 class="text-4xl tracking-tight font-semibold mb-10">Designed for those who refuse ordinary orbits.</h3>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for f in features %}
+        <div class="glass rounded-3xl p-7 holo">
+          <div class="w-9 h-9 mb-5 opacity-80">{% include 'partials/_icon.html' with key=f.icon_key only %}</div>
+          <div class="font-semibold text-2xl tracking-tight mb-2">{{ f.title }}</div>
+          <p class="text-white/70 text-[15px] leading-relaxed">{{ f.description }}</p>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-white/50">Add Features in the admin panel.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS / CREW LOGS -->
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <div class="section-header mb-3">CREW LOGS</div>
+    <h3 class="text-4xl tracking-tight font-semibold mb-10">Real explorers. Real trajectories.</h3>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for t in testimonials %}
+      <div class="glass rounded-3xl p-7">
+        <div class="flex gap-1 text-[var(--accent-cyan)] mb-4">{% for i in "12345"|make_list %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+        <blockquote class="text-lg leading-tight">“{{ t.quote }}”</blockquote>
+        <div class="mt-6 text-sm">
+          <div class="font-medium">{{ t.name }}</div>
+          <div class="text-white/50">{{ t.role }}</div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-white/50">Seed some Testimonials in admin → Core.</div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="launch" class="max-w-4xl mx-auto px-6 pb-24 text-center">
+    <div class="glass rounded-3xl px-10 py-14">
+      <div class="text-[var(--accent-cyan)] text-sm tracking-[3px] mb-3">THE HORIZON AWAITS</div>
+      <h3 class="text-5xl tracking-tighter font-semibold">Ready to chart a new course?</h3>
+      <p class="mt-3 text-white/70">Join the next cohort of language explorers. Fully configurable. Unforgettable design.</p>
+      <a href="/admin/" class="mt-8 inline-block orbit-btn px-10 py-4 rounded-2xl bg-white text-black font-semibold">Enter the Admin to Configure Everything</a>
+      <div class="mt-3 text-xs text-white/40">Everything on this page is editable live from the Django admin.</div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-8 text-xs text-white/40 text-center">
+    © {{ site.site_name }} Language Institute — Built with precision for extraordinary students.
+  </footer>
+
+  <script src="/static/js/starfield.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('hero-starfield');
+      if (canvas && window.AetherStarfield) {
+        new AetherStarfield(canvas, { count: 220, speed: 0.12, color: '#00e5ff' });
+      }
+    });
+  </script>
+{% endblock %}
