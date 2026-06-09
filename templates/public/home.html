@@ -14,14 +14,27 @@
   .holo-card { position:relative; }
   .holo-card::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg, rgba(0,229,255,.06), rgba(124,58,237,.04), rgba(255,77,148,.03)); z-index:-1; }
 
-  /* Clean, elegant full-bleed premium dark hero */
+  /* Clean, elegant full-bleed premium dark hero - Starlink-inspired futuristic */
   .hero-clean {
     background: linear-gradient(180deg, #05070f 0%, #0a0f1f 40%, #05070f 100%);
     position: relative;
   }
   .hero-clean canvas.starfield {
-    opacity: 0.55;
+    opacity: 0.65;
     z-index: 0;
+    mix-blend-mode: screen;
+  }
+  /* Subtle premium background texture for depth (always works, no JS) */
+  .hero-clean::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
   }
 </style>
 {% endblock %}
@@ -38,12 +51,12 @@
       </div>
 
       <h1 class="text-[56px] md:text-[78px] font-semibold tracking-[-3.4px] leading-[.9] mb-6 text-white">
-        زبان‌هایی که شما را به جهان‌های جدید می‌برند
+        زبان‌هایی که افق‌های جدیدی برایتان می‌گشایند
       </h1>
 
       <p class="max-w-[620px] mx-auto text-[17px] md:text-[18px] text-white/70 leading-relaxed">
-        آکادمی زبان اتر — تجربه‌ای مدرن، دقیق و نتیجه‌محور برای کسانی که به کیفیت واقعی اهمیت می‌دهند. 
-        دوره‌های حرفه‌ای انگلیسی، فرانسوی، آلمانی و بیشتر با اساتید بومی و مسیرهای شخصی‌سازی‌شده.
+        آکادمی زبان اتر، پلتفرم ممتاز آموزش زبان با طراحی مدرن و تجربه‌ای متفاوت. 
+        دوره‌های تخصصی انگلیسی، فرانسوی، آلمانی و دیگر زبان‌ها با متدهای اثربخش، اساتید حرفه‌ای و برنامه‌های کاملاً شخصی‌سازی‌شده برای دستیابی به نتایج واقعی.
       </p>
 
       <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -111,10 +124,10 @@
   <section id="constellation" class="max-w-7xl mx-auto px-6 pt-24 pb-14">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-9">
       <div>
-        <div class="section-label">دوره‌های زبان</div>
-        <h2 class="text-5xl md:text-6xl tracking-[-2px] font-semibold">زبان‌هایی که آموزش می‌دهیم</h2>
+        <div class="section-label">انتخاب زبان</div>
+        <h2 class="text-5xl md:text-6xl tracking-[-2px] font-semibold">زبان دلخواه خود را با استانداردهای جهانی بیاموزید</h2>
       </div>
-      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">مشاهده همه دوره‌ها ←</a>
+      <a href="{% url 'catalog:course_list' %}" class="text-sm text-[var(--accent-cyan)] hover:underline flex items-center gap-1">مشاهده کاتالوگ کامل ←</a>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
@@ -194,18 +207,18 @@
     </div>
   </section>
 
-  <!-- FINAL CTA - Realistic and professional -->
+  <!-- FINAL CTA - Professional and inviting -->
   <section id="launch" class="max-w-4xl mx-auto px-6 pb-24">
     <div class="glass rounded-3xl px-10 py-14 text-center border border-white/10">
-      <div class="text-[var(--accent-cyan)] tracking-[2.5px] text-xs mb-3">شروع کنید</div>
-      <h3 class="text-5xl md:text-6xl tracking-[-1.8px] font-semibold leading-tight">آماده‌اید سطح زبان خود را<br>به شکل جدی ارتقا دهید؟</h3>
-      <p class="mt-4 max-w-lg mx-auto text-white/70">به صدها دانشجویی بپیوندید که با برنامه‌های دقیق و اساتید حرفه‌ای اتر به اهداف تحصیلی، شغلی و شخصی خود رسیده‌اند.</p>
+      <div class="text-[var(--accent-cyan)] tracking-[2px] text-xs mb-3">آماده‌اید؟</div>
+      <h3 class="text-5xl md:text-6xl tracking-[-1.8px] font-semibold leading-tight">سطح زبان خود را<br>به صورت حرفه‌ای و ماندگار ارتقا دهید</h3>
+      <p class="mt-4 max-w-lg mx-auto text-white/70">به جمع زبان‌آموزانی بپیوندید که با رویکرد علمی، اساتید مجرب و برنامه‌های دقیق اتر به اهداف تحصیلی، شغلی و شخصی خود دست یافته‌اند.</p>
 
       <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
         <a href="{% url 'catalog:course_list' %}" class="orbit-btn px-9 py-3.5 rounded-2xl bg-white text-black font-semibold tracking-wider text-sm">مشاهده دوره‌ها</a>
         <a href="{% url 'accounts:register' %}" class="orbit-btn px-8 py-3.5 rounded-2xl border border-white/30 hover:bg-white/5 text-sm tracking-wider">ایجاد حساب رایگان</a>
       </div>
-      <div class="mt-5 text-[10px] text-white/45 tracking-widest">۷ روز ضمانت رضایت • بدون تعهد بلندمدت</div>
+      <div class="mt-5 text-[10px] text-white/45 tracking-widest">ارزیابی سطح رایگان • ۷ روز ضمانت • بدون تعهد اولیه</div>
     </div>
   </section>
 

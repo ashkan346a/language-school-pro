@@ -33,11 +33,11 @@ def _get_site_data():
 
     # Curated professional Persian defaults (always look great, even with empty DB)
     default_languages = [
-        {"name": "انگلیسی", "slug": "english", "accent_color": "#00e5ff", "short_desc": "از مکالمه روزمره تا آمادگی آزمون‌های بین‌المللی. مهارت‌های واقعی برای زندگی و کار."},
-        {"name": "فرانسوی", "slug": "french", "accent_color": "#7c3aed", "short_desc": "دقت، ظرافت و فرهنگ. مناسب سفر، تحصیل و کسب‌وکارهای بین‌المللی."},
-        {"name": "آلمانی", "slug": "german", "accent_color": "#22c55e", "short_desc": "ساختار قوی و کاربرد عملی. درهای فرصت‌های شغلی و تحصیلی اروپا را باز کنید."},
-        {"name": "اسپانیایی", "slug": "spanish", "accent_color": "#ff4d94", "short_desc": "زبان دوم جهان. ارتباط با فرهنگ‌های غنی آمریکای لاتین و اسپانیا."},
-        {"name": "ایتالیایی", "slug": "italian", "accent_color": "#f59e0b", "short_desc": "زبان هنر، طراحی و زندگی. برای علاقه‌مندان به فرهنگ و سفر."},
+        {"name": "انگلیسی", "slug": "english", "accent_color": "#00e5ff", "short_desc": "از مکالمه روان و روزمره تا آمادگی کامل برای آزمون‌های بین‌المللی IELTS و TOEFL. مهارت‌های کاربردی برای تحصیل، مهاجرت و پیشرفت شغلی."},
+        {"name": "فرانسوی", "slug": "french", "accent_color": "#7c3aed", "short_desc": "تسلط بر زبان دیپلماسی، هنر و تجارت بین‌المللی. مناسب برای سفرهای حرفه‌ای، تحصیل در فرانسه و فرصت‌های اروپایی."},
+        {"name": "آلمانی", "slug": "german", "accent_color": "#22c55e", "short_desc": "زبان مهندسی، صنعت و دانشگاه‌های برتر جهان. کلید ورود به بازار کار آلمان و کشورهای آلمانی‌زبان."},
+        {"name": "اسپانیایی", "slug": "spanish", "accent_color": "#ff4d94", "short_desc": "دومین زبان پرگویش جهان. تسلط بر فرهنگ غنی اسپانیا و آمریکای لاتین برای تجارت، سفر و روابط بین‌المللی."},
+        {"name": "ایتالیایی", "slug": "italian", "accent_color": "#f59e0b", "short_desc": "زبان طراحی، مد، آشپزی و هنر. تجربه‌ای فرهنگی عمیق برای علاقه‌مندان به ایتالیا و سبک زندگی مدیترانه‌ای."},
     ]
 
     try:
@@ -61,12 +61,12 @@ def _get_site_data():
     except Exception:
         stats = default_stats
 
-    # High-quality, benefit-driven features (no "miniature space" overkill)
+    # High-quality, benefit-driven features - professional and realistic
     default_features = [
-        {"title": "مسیرهای شخصی‌سازی‌شده", "description": "بر اساس سطح، هدف و زمان شما، برنامه‌ای دقیق و واقع‌بینانه طراحی می‌شود. پیشرفت‌تان همیشه قابل اندازه‌گیری است."},
-        {"title": "اساتید حرفه‌ای و بومی", "description": "مدرسان با تجربه تدریس بین‌المللی و مدارک معتبر. تمرکز روی مهارت‌های واقعی، نه فقط گرامر."},
-        {"title": "تمرین تعاملی و بازخورد", "description": "تمرین‌های گفتاری، شنیداری و نوشتاری با بازخورد سریع. جلسات کوچک گروهی و تمرین‌های فردی."},
-        {"title": "انعطاف کامل + گواهی معتبر", "description": "یادگیری خودگام یا گروهی زنده. در پایان هر سطح، گواهی پایان دوره با جزئیات عملکرد دریافت می‌کنید."},
+        {"title": "برنامه آموزشی شخصی‌سازی‌شده", "description": "پس از ارزیابی دقیق سطح، برنامه‌ای منطبق با اهداف، زمان و سبک یادگیری شما طراحی می‌شود. پیشرفت در هر مرحله قابل پیگیری و اندازه‌گیری است.", "icon_html": '<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:#00e5ff; box-shadow:0 0 12px #00e5ff55;"></span>'},
+        {"title": "اساتید بومی و متخصص", "description": "مدرسان با سال‌ها تجربه تدریس در سطح بین‌المللی و مدارک معتبر. تمرکز بر مهارت‌های ارتباطی واقعی و کاربردی، نه صرفاً قواعد گرامری.", "icon_html": '<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:#00e5ff; box-shadow:0 0 12px #00e5ff55;"></span>'},
+        {"title": "تمرین‌های تعاملی و بازخورد فوری", "description": "جلسات گفتاری و شنیداری زنده، تمرین‌های نوشتاری و ابزارهای تعاملی با بازخورد سریع و سازنده از سوی اساتید.", "icon_html": '<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:#00e5ff; box-shadow:0 0 12px #00e5ff55;"></span>'},
+        {"title": "انعطاف‌پذیری کامل و گواهی معتبر", "description": "امکان انتخاب مسیر خودگام یا شرکت در گروه‌های کوچک زنده. در پایان هر سطح، گواهی رسمی با ذکر سطح CEFR و ارزیابی عملکرد دریافت می‌کنید.", "icon_html": '<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:#00e5ff; box-shadow:0 0 12px #00e5ff55;"></span>'},
     ]
     try:
         features = list(Feature.objects.filter(is_active=True)[:6])
@@ -75,11 +75,11 @@ def _get_site_data():
     except Exception:
         features = default_features
 
-    # Realistic, trustworthy Persian testimonials
+    # Realistic, trustworthy Persian testimonials - professional tone
     default_testimonials = [
-        {"name": "سارا احمدی", "role": "دانشجوی انگلیسی پیشرفته • آمادگی آیلتس", "quote": "بعد از ۴ ماه، از ۵.۵ به ۷.۵ آیلتس رسیدم. برنامه دقیق و بازخورد اساتید واقعاً تفاوت ایجاد کرد.", "rating": 5},
-        {"name": "امیر رضایی", "role": "مدیر محصول • فرانسوی تجاری", "quote": "کلاس‌های فرانسوی اتر دقیقاً همان چیزی بود که برای مذاکره با شرکای فرانسوی نیاز داشتم. عملی و باکیفیت.", "rating": 5},
-        {"name": "نازنین کریمی", "role": "دانشجوی آلمانی • اپلای تحصیلی", "quote": "با کمک مسیرهای اتر، سطح B2 را در زمان کوتاهی گرفتم و مدارکم برای دانشگاه‌های آلمان آماده شد.", "rating": 5},
+        {"name": "سارا احمدی", "role": "دانشجوی دوره پیشرفته انگلیسی • آمادگی آیلتس ۷.۵", "quote": "در کمتر از چهار ماه توانستم نمره آیلتس خود را از ۵.۵ به ۷.۵ برسانم. ساختار برنامه، کیفیت تدریس و بازخوردهای دقیق اساتید واقعاً مؤثر بود.", "rating": 5, "stars": "★★★★★"},
+        {"name": "امیر رضایی", "role": "مدیر محصول در شرکت بین‌المللی • فرانسوی تجاری", "quote": "دوره‌های فرانسوی اتر دقیقاً نیازهای حرفه‌ای من برای مذاکرات و ارتباطات با شرکای فرانسوی را پوشش داد. رویکرد عملی و سطح بالای آموزش قابل تقدیر است.", "rating": 5, "stars": "★★★★★"},
+        {"name": "نازنین کریمی", "role": "متقاضی تحصیل در آلمان • سطح B2", "quote": "با برنامه‌های هدفمند اتر در مدت زمان کوتاهی به سطح B2 رسیدم. مدارک و آمادگی لازم برای اپلای دانشگاه‌های آلمان را با موفقیت کسب کردم.", "rating": 5, "stars": "★★★★★"},
     ]
     try:
         testimonials = list(Testimonial.objects.filter(is_featured=True)[:6])
@@ -119,15 +119,22 @@ def home(request):
     """Stunning public landing page. Resilient on first deploy."""
     site, languages, stats, features, testimonials, faqs, pricing_tiers, crew = _get_site_data()
 
-    # Pre-compute simple stars to avoid complex nested template filters that can stress Context copying on some Python versions
+    # Pre-compute simple stars and icon_html in a way that works for both model instances AND plain dicts (from defensive defaults)
     for t in testimonials:
-        t.stars = ''.join('★' if i < (t.rating or 5) else '☆' for i in range(5))
+        rating = getattr(t, 'rating', None) or (t.get('rating') if isinstance(t, dict) else 5)
+        stars_str = ''.join('★' if i < (rating or 5) else '☆' for i in range(5))
+        if isinstance(t, dict):
+            t['stars'] = stars_str
+        else:
+            t.stars = stars_str
 
-    # For features, provide a very simple icon placeholder (colored dot) to avoid {% include with only %} deep context copies
-    # that have triggered template rendering issues in the current runtime during extends/block.
     for f in features:
         color = '#00e5ff'
-        f.icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+        icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+        if isinstance(f, dict):
+            f['icon_html'] = icon_html
+        else:
+            f.icon_html = icon_html
 
     context = {
         'site': site,
@@ -147,7 +154,11 @@ def about(request):
 
     for f in features:
         color = '#00e5ff'
-        f.icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+        icon_html = f'<span class="inline-block w-6 h-6 rounded-full align-middle" style="background:{color}; box-shadow:0 0 12px {color}55;"></span>'
+        if isinstance(f, dict):
+            f['icon_html'] = icon_html
+        else:
+            f.icon_html = icon_html
 
     return render(request, 'public/about.html', {
         'site': site,
